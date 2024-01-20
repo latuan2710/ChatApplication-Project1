@@ -46,8 +46,8 @@ public class UserRegistration extends UseCase<UserRegistration.InputValues, User
 	}
 
 	public static class OutputValues {
-		private final RegisterResult _result;
-		private final String _message;
+		private RegisterResult _result;
+		private String _message;
 
 		public OutputValues(RegisterResult result, String message) {
 			_message = message;

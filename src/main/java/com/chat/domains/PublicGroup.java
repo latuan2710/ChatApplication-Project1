@@ -6,7 +6,6 @@ public class PublicGroup extends Group{
 
 	public PublicGroup(List<User> users) {
 		super(users);
-		// TODO Auto-generated constructor stub
 	}
 
 }

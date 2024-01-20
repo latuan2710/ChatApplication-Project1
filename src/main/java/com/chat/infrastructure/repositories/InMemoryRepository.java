@@ -9,16 +9,15 @@ import com.chat.domains.BaseEntity;
 import com.chat.usecases.adapters.UserRepository;
 
 public class InMemoryRepository<T extends BaseEntity> implements UserRepository<T> {
-	private List<T> enities;
-	public static int idCounter = 1;
+	private List<T> _enities;
 
 	public InMemoryRepository() {
-		enities = new ArrayList<>();
+		_enities = new ArrayList<>();
 	}
 
 	@Override
 	public T getById(String id) {
-		Optional<T> entity = enities.stream().filter(e -> e.getId().equals(id)).findFirst();
+		Optional<T> entity = _enities.stream().filter(e -> e.getId().equals(id)).findFirst();
 		return entity.get();
 	}
 
@@ -29,24 +28,24 @@ public class InMemoryRepository<T extends BaseEntity> implements UserRepository<
 			return false;
 		}
 
-		enities.add(entity);
+		_enities.add(entity);
 		return true;
 	}
 
 	@Override
 	public void deleteAll() {
-		enities.clear();
+		_enities.clear();
 	}
 
 	@Override
 	public T getFirst(Predicate<T> predicate) {
-		Optional<T> entity = enities.stream().filter(predicate).findFirst();
+		Optional<T> entity = _enities.stream().filter(predicate).findFirst();
 		return entity.isPresent() ? entity.get() : null;
 	}
 
 	@Override
 	public List<T> getAll() {
-		return enities;
+		return _enities;
 	}
 
 }

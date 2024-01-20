@@ -83,8 +83,7 @@ public class User extends BaseEntity {
 		}
 
 		public User build() {
-			User user = new User(_username, _lastName, _firstName, _password, _isMale, _dateOfBirth);
-			return user;
+			return new User(_username, _lastName, _firstName, _password, _isMale, _dateOfBirth);
 		}
 	}
 }

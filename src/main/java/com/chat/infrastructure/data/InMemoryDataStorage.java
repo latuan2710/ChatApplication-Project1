@@ -8,17 +8,17 @@ import com.chat.infrastructure.repositories.InMemoryRepository;
 public class InMemoryDataStorage implements DataStorage {
     private UserRepository<User> _users;
 
-    private static InMemoryDataStorage storage;
+    private static InMemoryDataStorage _storage;
 
     private InMemoryDataStorage() {
         _users = new InMemoryRepository<User>();
     }
 
     public static InMemoryDataStorage getInstance() {
-        if (storage == null) {
-            storage = new InMemoryDataStorage();
+        if (_storage == null) {
+            _storage = new InMemoryDataStorage();
         }
-        return storage;
+        return _storage;
     }
 
     public UserRepository<User> getUserRepository(){

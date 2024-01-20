@@ -27,8 +27,8 @@ public class UserLogin extends UseCase<UserLogin.InputValues, UserLogin.OutputVa
 	}
 
 	public static class OutputValues {
-		private final LoginResult _result;
-		private final String _message;
+		private LoginResult _result;
+		private String _message;
 
 		public OutputValues(LoginResult result, String message) {
 			this._result = result;
