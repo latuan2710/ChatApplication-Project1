@@ -1,5 +1,5 @@
 package com.chat.domains;
 
 public enum File {
-	Image, Video, Audio, test
+	Image, Video, Audio
 }
