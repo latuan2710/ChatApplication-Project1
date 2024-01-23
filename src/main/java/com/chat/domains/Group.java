@@ -2,7 +2,7 @@ package com.chat.domains;
 
 import java.util.List;
 
-public abstract class Group extends BaseEntity{
+public abstract class Group extends ChatEntity{
 	private List<User> _users;
 
 	public Group(List<User> users) {

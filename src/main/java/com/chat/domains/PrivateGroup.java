@@ -3,22 +3,19 @@ package com.chat.domains;
 import java.util.List;
 
 public class PrivateGroup extends Group {
-	private List<User> _admins;
+	private User _admin;
 
-	public PrivateGroup(List<User> users, List<User> admins) {
+	public PrivateGroup(List<User> users, User admin) {
 		super(users);
-		this._admins = admins;
+		this._admin = admin;
 	}
 
 	public PrivateGroup(List<User> users) {
 		super(users);
 	}
 
-	public List<User> getAdmins() {
-		return _admins;
+	public User getAdmins() {
+		return _admin;
 	}
 
-	public void setAdmins(List<User> admins) {
-		this._admins = admins;
-	}
 }

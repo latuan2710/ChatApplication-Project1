@@ -1,12 +1,10 @@
 package com.chat.usecases.user;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.infrastructure.services.SHA256Hasher;
 import com.chat.usecases.adapters.DataStorage;
@@ -36,7 +34,7 @@ class UserLoginTests {
 		UserLogin login = new UserLogin(storage, new SHA256Hasher());
 		UserLogin.OutputValues output = login.execute(input);
 
-		assertEquals(output.getResult(), LoginResult.Successed);
+		Assert.assertEquals(output.getResult(), LoginResult.Successed);
 	}
 
 	@Test
@@ -47,7 +45,7 @@ class UserLoginTests {
 		UserLogin login = new UserLogin(storage, new SHA256Hasher());
 		UserLogin.OutputValues output = login.execute(input);
 
-		assertEquals(output.getResult(), LoginResult.Failed);
+		Assert.assertEquals(output.getResult(), LoginResult.Failed);
 	}
 
 }

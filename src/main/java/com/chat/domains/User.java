@@ -2,7 +2,7 @@ package com.chat.domains;
 
 import java.util.Date;
 
-public class User extends BaseEntity {
+public class User extends ChatEntity {
 	private String _username;
 	private String _lastName;
 	private String _firstName;
