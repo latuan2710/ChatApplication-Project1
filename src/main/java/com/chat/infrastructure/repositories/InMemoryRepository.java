@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.chat.domains.BaseEntity;
-import com.chat.usecases.adapters.UserRepository;
+import com.chat.usecases.adapters.Repository;
 
-public class InMemoryRepository<T extends BaseEntity> implements UserRepository<T> {
+public class InMemoryRepository<T extends BaseEntity> implements Repository<T> {
 	private List<T> _enities;
 
 	public InMemoryRepository() {
@@ -47,5 +47,4 @@ public class InMemoryRepository<T extends BaseEntity> implements UserRepository<
 	public List<T> getAll() {
 		return _enities;
 	}
-
 }
