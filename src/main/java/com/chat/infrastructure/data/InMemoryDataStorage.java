@@ -1,12 +1,12 @@
 package com.chat.infrastructure.data;
 
 import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.adapters.UserRepository;
+import com.chat.usecases.adapters.Repository;
 import com.chat.domains.User;
 import com.chat.infrastructure.repositories.InMemoryRepository;
 
 public class InMemoryDataStorage implements DataStorage {
-    private UserRepository<User> _users;
+    private Repository<User> _users;
 
     private static InMemoryDataStorage _storage;
 
@@ -21,7 +21,7 @@ public class InMemoryDataStorage implements DataStorage {
         return _storage;
     }
 
-    public UserRepository<User> getUserRepository(){
+    public Repository<User> getUserRepository(){
         return _users;
     }
 

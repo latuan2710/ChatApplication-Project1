@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import com.chat.domains.BaseEntity;
+import com.chat.domains.User;
 
-public interface UserRepository<T extends BaseEntity> {
-	List<T> getAll();
-
+public interface Repository<T extends BaseEntity> {
 	T getById(String id);
 
 	boolean add(T addingEntity);
@@ -15,4 +14,6 @@ public interface UserRepository<T extends BaseEntity> {
 	void deleteAll();
 
 	T getFirst(Predicate<T> predicate);
+
+	List<T> getAll();
 }
