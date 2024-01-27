@@ -62,6 +62,8 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	public OutputValues execute(InputValues input) {
 		GroupRepository repository = (GroupRepository) _dataStorage.getGroupRepository();
 		List<User> users = new ArrayList<>();
+		List<User> admins = new ArrayList<>();
+
 		User user = input._user;
 		Group group = null;
 
@@ -70,14 +72,20 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 		if (input._type == GroupType.Public) {
 			group = createPublicGroup(repository, users);
 		} else {
-			group = createPrivateGroup(repository, users, user);
+			admins.add(user);
+			group = createPrivateGroup(repository, users, admins);
 		}
 
 		return new OutputValues(GroupCreationResult.Successed, "", group);
 	}
 
-	private Group createPrivateGroup(GroupRepository repository, List<User> users, User user) {
+	private Group createPrivateGroup(GroupRepository repository, List<User> users, List<User> user) {
 		PrivateGroup group = new PrivateGroup(users, GroupType.Private, user);
+		List<User> admins = new ArrayList<>();
+
+		for (User u : user) {
+			admins.add(u);
+		}
 
 		repository.add(group);
 		return group;
