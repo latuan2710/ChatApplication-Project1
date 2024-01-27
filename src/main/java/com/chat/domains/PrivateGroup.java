@@ -8,7 +8,7 @@ public class PrivateGroup extends Group {
 	public PrivateGroup(List<User> users, GroupType type, User _admin) {
 		super(users, type);
 		this._admin = _admin;
-	}
+	} 
 
 	public User getAdmins() {
 		return _admin;
