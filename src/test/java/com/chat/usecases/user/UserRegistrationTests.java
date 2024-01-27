@@ -11,12 +11,6 @@ import com.chat.usecases.user.UserRegistration.RegisterResult;
 
 class UserRegistrationTests {
 
-	@AfterEach
-	public void tearDown() {
-		DataStorage storage = InMemoryDataStorage.getInstance();
-		storage.cleanAll();
-	}
-
 	@Test
 	void RegistrationSuccesfully() {
 		UserRegistration.InputValues input = new UserRegistration.InputValues("ntn", "123");
@@ -38,4 +32,11 @@ class UserRegistrationTests {
 
 		Assert.assertEquals(output.getResult(), RegisterResult.Failed);
 	}
+	
+	@AfterEach
+	public void tearDown() {
+		DataStorage storage = InMemoryDataStorage.getInstance();
+		storage.cleanAll();
+	}
+
 }

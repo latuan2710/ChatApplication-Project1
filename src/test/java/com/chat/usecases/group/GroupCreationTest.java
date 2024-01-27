@@ -25,13 +25,7 @@ class GroupCreationTest {
 		groupCreation.execute(inputPublicGroup);
 		groupCreation.execute(inputPrivateGroup);
 	}
-
-	@AfterEach
-	public void tearDown() {
-		DataStorage storage = InMemoryDataStorage.getInstance();
-		storage.cleanAll();
-	}
-
+	
 	@Test
 	void testPrivateGroupCreation() {
 		User user = new User("dasdas", "", "", "", false, null);
@@ -56,4 +50,9 @@ class GroupCreationTest {
 		Assert.assertEquals(output.getResult(), GroupCreationResult.Successed);
 	}
 
+	@AfterEach
+	public void tearDown() {
+		DataStorage storage = InMemoryDataStorage.getInstance();
+		storage.cleanAll();
+	}
 }
