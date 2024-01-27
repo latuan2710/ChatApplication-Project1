@@ -11,7 +11,7 @@ import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.infrastructure.services.SHA256Hasher;
 import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.group.GettingUserGroups.GroupResult;
+import com.chat.usecases.group.GettingUserGroups.GettingGroupResult;
 import com.chat.usecases.user.UserRegistration;
 
 class GettingUserGroupsTest {
@@ -55,7 +55,7 @@ class GettingUserGroupsTest {
 
 		GettingUserGroups getUserGroups = new GettingUserGroups(storage);
 		GettingUserGroups.OutputValues output = getUserGroups.execute(input);
-		Assert.assertEquals(0, output.getGroups().size());
+		Assert.assertEquals(GettingGroupResult.Failed, output.getResult());
 
 	}
 
