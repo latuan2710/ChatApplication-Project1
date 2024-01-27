@@ -2,12 +2,14 @@ package com.chat.domains;
 
 import java.util.List;
 
-public abstract class Group extends ChatEntity{
+public abstract class Group extends ChatEntity {
 	private List<User> _users;
+	private GroupType _type;
 
-	public Group(List<User> users) {
+	public Group(List<User> users, GroupType type) {
 		super();
 		this._users = users;
+		this._type = type;
 	}
 
 	public List<User> getUsers() {
@@ -18,4 +20,15 @@ public abstract class Group extends ChatEntity{
 		this._users = users;
 	}
 
+	public GroupType getType() {
+		return _type;
+	}
+
+	public void setType(GroupType type) {
+		this._type = type;
+	}
+
+	public static enum GroupType {
+		Private, Public
+	}
 }
