@@ -21,8 +21,8 @@ public class PrivateGroupCreation extends UseCase<PrivateGroupCreation.InputValu
 	public static class InputValues {
 		private User _user;
 
-		public InputValues(User _user) {
-			this._user = _user;
+		public InputValues(User user) {
+			this._user = user;
 		}
 	}
 

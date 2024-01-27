@@ -23,13 +23,7 @@ class UserSearchingTest {
 		storage.getUserRepository().add(user2);
 		storage.getUserRepository().add(user3);
 	}
-
-	@AfterEach
-	public void tearDown() {
-		DataStorage storage = InMemoryDataStorage.getInstance();
-		storage.cleanAll();
-	}
-
+	
 	@Test
 	void searchSuccessfully() {
 		UserSearching.InputValues input = new UserSearching.InputValues("sda");
@@ -52,6 +46,12 @@ class UserSearchingTest {
 
 		Assert.assertEquals(output.getResult(), SearchingResult.Failed);
 		Assert.assertEquals(output.getUsers(), null);
+	}
+
+	@AfterEach
+	public void tearDown() {
+		DataStorage storage = InMemoryDataStorage.getInstance();
+		storage.cleanAll();
 	}
 
 }
