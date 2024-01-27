@@ -3,9 +3,9 @@ package com.chat.infrastructure.repositories;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import com.chat.domains.Group;
-import com.chat.domains.Group.GroupType;
 import com.chat.domains.PrivateGroup;
 import com.chat.domains.PublicGroup;
 import com.chat.usecases.adapters.GroupRepository;
@@ -50,12 +50,16 @@ public class InMemoryGroupRepository extends InMemoryRepository<Group> implement
 
 	@Override
 	public List<PublicGroup> getAllPublicGroup() {
-		return (List<PublicGroup>) this.getAll().stream().filter(g -> g.getType().equals(GroupType.Public));
+		List<Group> allGroups = this.getAll();
+		return allGroups.stream().filter(g -> g instanceof PublicGroup).map(g -> (PublicGroup) g)
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<PrivateGroup> getAllPrivateGroup() {
-		return (List<PrivateGroup>) this.getAll().stream().filter(g -> g.getType().equals(GroupType.Private));
+		List<Group> allGroups = this.getAll();
+		return allGroups.stream().filter(g -> g instanceof PrivateGroup).map(g -> (PrivateGroup) g)
+				.collect(Collectors.toList());
 	}
 
 }
