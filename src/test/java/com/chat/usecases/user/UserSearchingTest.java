@@ -23,7 +23,7 @@ class UserSearchingTest {
 		storage.getUserRepository().add(user2);
 		storage.getUserRepository().add(user3);
 	}
-	
+
 	@Test
 	void searchSuccessfully() {
 		UserSearching.InputValues input = new UserSearching.InputValues("sda");
@@ -32,7 +32,7 @@ class UserSearchingTest {
 		UserSearching finder = new UserSearching(storage);
 		UserSearching.OutputValues output = finder.execute(input);
 
-		Assert.assertEquals(output.getResult(), SearchingResult.Successed);
+		Assert.assertEquals(SearchingResult.Successed, output.getResult());
 		Assert.assertEquals(output.getUsers().size(), 2);
 	}
 
@@ -44,7 +44,7 @@ class UserSearchingTest {
 		UserSearching finder = new UserSearching(storage);
 		UserSearching.OutputValues output = finder.execute(input);
 
-		Assert.assertEquals(output.getResult(), SearchingResult.Failed);
+		Assert.assertEquals(SearchingResult.Failed, output.getResult());
 		Assert.assertEquals(output.getUsers(), null);
 	}
 

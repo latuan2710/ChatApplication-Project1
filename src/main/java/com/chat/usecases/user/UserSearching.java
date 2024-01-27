@@ -10,9 +10,9 @@ import com.chat.usecases.adapters.DataStorage;
 public class UserSearching extends UseCase<UserSearching.InputValues, UserSearching.OutputValues> {
 	private DataStorage _dataStorage;
 
-	public UserSearching(DataStorage _dataStorage) {
+	public UserSearching(DataStorage dataStorage) {
 		super();
-		this._dataStorage = _dataStorage;
+		this._dataStorage = dataStorage;
 	}
 
 	public static class InputValues {

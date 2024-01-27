@@ -25,7 +25,7 @@ class UserRegistrationTests {
 		UserRegistration registration = new UserRegistration(storage, new SHA256Hasher());
 		UserRegistration.OutputValues output = registration.execute(input);
 
-		Assert.assertEquals(output.getResult(), RegisterResult.Successed);
+		Assert.assertEquals(RegisterResult.Successed, output.getResult());
 	}
 
 	@Test
@@ -36,6 +36,6 @@ class UserRegistrationTests {
 		UserRegistration registration = new UserRegistration(storage, new SHA256Hasher());
 		UserRegistration.OutputValues output = registration.execute(input);
 
-		Assert.assertEquals(output.getResult(), RegisterResult.Failed);
+		Assert.assertEquals(RegisterResult.Failed, output.getResult());
 	}
 }

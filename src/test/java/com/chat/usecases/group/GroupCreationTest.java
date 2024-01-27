@@ -21,7 +21,7 @@ class GroupCreationTest {
 
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		GroupCreation groupCreation = new GroupCreation(storage);
-		
+
 		groupCreation.execute(inputPublicGroup);
 		groupCreation.execute(inputPrivateGroup);
 	}
@@ -41,7 +41,7 @@ class GroupCreationTest {
 		GroupCreation groupCreation = new GroupCreation(storage);
 		GroupCreation.OutputValues output = groupCreation.execute(input);
 
-		Assert.assertEquals(output.getResult(), GroupCreationResult.Successed);
+		Assert.assertEquals(GroupCreationResult.Successed, output.getResult());
 	}
 
 	@Test
@@ -53,7 +53,7 @@ class GroupCreationTest {
 		GroupCreation groupCreation = new GroupCreation(storage);
 		GroupCreation.OutputValues output = groupCreation.execute(input);
 
-		Assert.assertEquals(output.getResult(), GroupCreationResult.Successed);
+		Assert.assertEquals(GroupCreationResult.Successed, output.getResult());
 	}
 
 }

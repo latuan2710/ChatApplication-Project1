@@ -17,9 +17,9 @@ class UserLoginTests {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		UserRegistration registration = new UserRegistration(storage, new SHA256Hasher());
-		UserRegistration.OutputValues output = registration.execute(input);
+		registration.execute(input);
 	}
-	
+
 	@Test
 	void loginSuccessfully() {
 		UserLogin.InputValues input = new UserLogin.InputValues("ntn", "123");
@@ -28,7 +28,7 @@ class UserLoginTests {
 		UserLogin login = new UserLogin(storage, new SHA256Hasher());
 		UserLogin.OutputValues output = login.execute(input);
 
-		Assert.assertEquals(output.getResult(), LoginResult.Successed);
+		Assert.assertEquals(LoginResult.Successed, output.getResult());
 	}
 
 	@Test
@@ -39,7 +39,7 @@ class UserLoginTests {
 		UserLogin login = new UserLogin(storage, new SHA256Hasher());
 		UserLogin.OutputValues output = login.execute(input);
 
-		Assert.assertEquals(output.getResult(), LoginResult.Failed);
+		Assert.assertEquals(LoginResult.Failed, output.getResult());
 	}
 
 	@AfterEach

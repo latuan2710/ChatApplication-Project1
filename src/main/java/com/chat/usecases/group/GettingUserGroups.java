@@ -11,6 +11,11 @@ import com.chat.usecases.adapters.DataStorage;
 public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, GettingUserGroups.OutputValues> {
 	private DataStorage _dataStorage;
 
+	public GettingUserGroups(DataStorage dataStorage) {
+		super();
+		this._dataStorage = dataStorage;
+	}
+
 	public static class InputValues {
 		private User _user;
 
@@ -38,6 +43,10 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 			return _message;
 		}
 
+		public List<Group> getGroups() {
+			return _group;
+		}
+
 	}
 
 	public static enum GroupResult {
@@ -46,19 +55,23 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 
 	@Override
 	public OutputValues execute(InputValues input) {
+		List<Group> result = new ArrayList<>();
 		List<Group> groups = _dataStorage.getGroupRepository().getAll();
-		List<Group> result = new ArrayList<Group>();
-		User userInput = input._user;
-		for (Group group : result) {
-			if (group.getUsers() == userInput) {
-				result.add(group);
-			}
-		}
-		if (result.isEmpty()) {
-			return new OutputValues(GroupResult.Failed, "", null);
-		} else {
+		
+		if (groups.isEmpty()) {
 			return new OutputValues(GroupResult.Successed, "", result);
 		}
+		
+		User userInput = input._user;
+		for (Group group : groups) {
+			for (User u : group.getUsers()) {
+				if (u.equals(userInput)) {
+					result.add(group);
+				}
+			}
+		}
+
+		return new OutputValues(GroupResult.Successed, "", result);
 
 	}
 }
