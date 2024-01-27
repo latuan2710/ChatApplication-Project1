@@ -19,13 +19,7 @@ class UserLoginTests {
 		UserRegistration registration = new UserRegistration(storage, new SHA256Hasher());
 		UserRegistration.OutputValues output = registration.execute(input);
 	}
-
-	@AfterEach
-	public void tearDown() {
-		DataStorage storage = InMemoryDataStorage.getInstance();
-		storage.cleanAll();
-	}
-
+	
 	@Test
 	void loginSuccessfully() {
 		UserLogin.InputValues input = new UserLogin.InputValues("ntn", "123");
@@ -48,4 +42,9 @@ class UserLoginTests {
 		Assert.assertEquals(output.getResult(), LoginResult.Failed);
 	}
 
+	@AfterEach
+	public void tearDown() {
+		DataStorage storage = InMemoryDataStorage.getInstance();
+		storage.cleanAll();
+	}
 }
