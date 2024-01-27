@@ -36,7 +36,7 @@ public class InMemoryGroupRepository extends InMemoryRepository<Group> implement
 	}
 
 	public String getRandomString(int length) {
-		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
 		StringBuilder randomString = new StringBuilder();
 		Random random = new Random();
 
