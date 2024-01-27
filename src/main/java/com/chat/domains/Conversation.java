@@ -27,5 +27,4 @@ public class Conversation extends ChatEntity {
 	public void setParticipants(List<User> participants) {
 		this._participants = participants;
 	}
-
 }

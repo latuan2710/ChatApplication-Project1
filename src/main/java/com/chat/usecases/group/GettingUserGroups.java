@@ -46,7 +46,6 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 		public List<Group> getGroups() {
 			return _group;
 		}
-
 	}
 
 	public static enum GettingGroupResult {

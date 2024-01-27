@@ -41,5 +41,4 @@ public class InMemoryDataStorage implements DataStorage {
 		_users.deleteAll();
 		_groups.deleteAll();
 	}
-
 }

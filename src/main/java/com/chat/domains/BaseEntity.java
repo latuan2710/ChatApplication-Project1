@@ -12,5 +12,4 @@ public abstract class BaseEntity {
 	public String getId() {
 		return _id;
 	}
-
 }

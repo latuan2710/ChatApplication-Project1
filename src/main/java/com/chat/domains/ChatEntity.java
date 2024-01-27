@@ -5,5 +5,4 @@ public abstract class ChatEntity extends BaseEntity {
 	public ChatEntity() {
 		super();
 	}
-
 }

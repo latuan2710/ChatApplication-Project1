@@ -90,5 +90,4 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 		repository.add(group);
 		return group;
 	}
-
 }

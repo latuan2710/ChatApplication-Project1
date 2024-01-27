@@ -44,7 +44,6 @@ class GettingUserGroupsTest {
 		GettingUserGroups getUserGroups = new GettingUserGroups(storage);
 		GettingUserGroups.OutputValues output = getUserGroups.execute(input);
 		Assert.assertEquals(2, output.getGroups().size());
-
 	}
 
 	@Test
@@ -56,7 +55,5 @@ class GettingUserGroupsTest {
 		GettingUserGroups getUserGroups = new GettingUserGroups(storage);
 		GettingUserGroups.OutputValues output = getUserGroups.execute(input);
 		Assert.assertEquals(GettingGroupResult.Failed, output.getResult());
-
 	}
-
 }

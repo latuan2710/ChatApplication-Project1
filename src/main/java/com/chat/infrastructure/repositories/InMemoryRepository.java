@@ -26,7 +26,6 @@ public class InMemoryRepository<T extends BaseEntity> implements Repository<T> {
 		if (entity == null) {
 			return false;
 		}
-
 		_enities.add(entity);
 		return true;
 	}

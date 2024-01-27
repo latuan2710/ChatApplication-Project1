@@ -55,5 +55,4 @@ class GroupCreationTest {
 
 		Assert.assertEquals(GroupCreationResult.Successed, output.getResult());
 	}
-
 }

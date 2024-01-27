@@ -42,7 +42,6 @@ public class UserLogin extends UseCase<UserLogin.InputValues, UserLogin.OutputVa
 		public String getMessage() {
 			return _message;
 		}
-
 	}
 
 	public static enum LoginResult {

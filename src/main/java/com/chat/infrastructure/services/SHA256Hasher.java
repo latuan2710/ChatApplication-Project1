@@ -21,13 +21,10 @@ public class SHA256Hasher implements Hasher {
 				}
 				hexString.append(hex);
 			}
-
 			return hexString.toString();
 		} catch (NoSuchAlgorithmException exception) {
 			exception.printStackTrace();
 			return null;
 		}
-
 	}
-
 }

@@ -32,7 +32,6 @@ public class InMemoryGroupRepository extends InMemoryRepository<Group> implement
 				flag = false;
 			}
 		}
-
 		return joining_code;
 	}
 
@@ -73,5 +72,4 @@ public class InMemoryGroupRepository extends InMemoryRepository<Group> implement
 			}
 		}
 	}
-
 }

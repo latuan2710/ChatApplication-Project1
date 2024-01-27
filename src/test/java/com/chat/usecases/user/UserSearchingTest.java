@@ -53,5 +53,4 @@ class UserSearchingTest {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		storage.cleanAll();
 	}
-
 }
