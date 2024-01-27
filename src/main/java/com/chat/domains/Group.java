@@ -20,6 +20,12 @@ public abstract class Group extends ChatEntity {
 		this._users = users;
 	}
 
+	public void addUser(User user) {
+		if (!this._users.contains(user)) {
+			this._users.add(user);
+		}
+	}
+
 	public GroupType getType() {
 		return _type;
 	}
