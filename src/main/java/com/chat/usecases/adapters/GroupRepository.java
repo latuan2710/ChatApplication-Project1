@@ -10,8 +10,6 @@ import com.chat.domains.User;
 public interface GroupRepository extends Repository<Group> {
 	String generateJoiningCode();
 
-	void addUser(String id, User user);
-
 	List<PublicGroup> getAllPublicGroup();
 
 	List<PrivateGroup> getAllPrivateGroup();
