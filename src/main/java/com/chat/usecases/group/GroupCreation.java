@@ -20,11 +20,11 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	}
 
 	public static class InputValues {
-		private User _user;
+		private String _userId;
 		private GroupType _type;
 
-		public InputValues(User user, GroupType type) {
-			this._user = user;
+		public InputValues(String userId, GroupType type) {
+			this._userId = userId;
 			this._type = type;
 		}
 	}
@@ -62,7 +62,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	public OutputValues execute(InputValues input) {
 		GroupRepository repository = (GroupRepository) _dataStorage.getGroupRepository();
 		List<User> users = new ArrayList<>();
-		User user = input._user;
+		User user = _dataStorage.getUserRepository().getById(input._userId);
 		Group group = null;
 
 		users.add(user);

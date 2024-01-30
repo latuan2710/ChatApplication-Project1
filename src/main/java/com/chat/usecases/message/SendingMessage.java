@@ -1,5 +1,7 @@
 package com.chat.usecases.message;
 
+import java.util.List;
+
 import com.chat.domains.ChatEntity;
 import com.chat.domains.User;
 import com.chat.usecases.UseCase;
@@ -8,16 +10,13 @@ import com.chat.usecases.user.UserRegistration.RegisterResult;
 
 public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingMessage.OutputValues> {
 	private DataStorage _dataStorage;
-	
-	
+
 	public static class InputValues {
 		private User _sender;
 		private ChatEntity _receiver;
-		private Byte[] _content;
-		
-		
+		private String _text;
+		private List<byte[]> _files;
 
-	 
 	}
 
 	public static class OutputValues {
