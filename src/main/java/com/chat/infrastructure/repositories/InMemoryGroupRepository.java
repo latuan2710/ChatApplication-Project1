@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import com.chat.domains.Group;
 import com.chat.domains.PrivateGroup;
 import com.chat.domains.PublicGroup;
-import com.chat.domains.User;
 import com.chat.usecases.adapters.GroupRepository;
 
 public class InMemoryGroupRepository extends InMemoryRepository<Group> implements GroupRepository {
@@ -32,6 +31,7 @@ public class InMemoryGroupRepository extends InMemoryRepository<Group> implement
 				flag = false;
 			}
 		}
+
 		return joining_code;
 	}
 
@@ -63,13 +63,18 @@ public class InMemoryGroupRepository extends InMemoryRepository<Group> implement
 	}
 
 	@Override
-	public void addUser(String id, User u) {
-		Group group = this.getById(id);
-		List<User> users = group.getUsers();
-		for (User user : users) {
-			if (user != u) {
-				group.getUsers().add(user);
+	public PublicGroup findByJoiningCode(String code) {
+		List<PublicGroup> groups = this.getAllPublicGroup();
+		PublicGroup result = null;
+
+		for (PublicGroup group : groups) {
+			if (group.getJOINING_CODE().equals(code)) {
+				result = group;
+				break;
 			}
 		}
+
+		return result;
 	}
+
 }

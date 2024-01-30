@@ -15,4 +15,6 @@ public interface GroupRepository extends Repository<Group> {
 	List<PublicGroup> getAllPublicGroup();
 
 	List<PrivateGroup> getAllPrivateGroup();
+
+	PublicGroup findByJoiningCode(String code);
 }

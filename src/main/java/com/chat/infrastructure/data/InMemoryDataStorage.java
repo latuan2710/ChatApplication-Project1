@@ -32,7 +32,7 @@ public class InMemoryDataStorage implements DataStorage {
 	}
 
 	@Override
-	public Repository<Group> getGroupRepository() {
+	public GroupRepository getGroupRepository() {
 		return _groups;
 	}
 
