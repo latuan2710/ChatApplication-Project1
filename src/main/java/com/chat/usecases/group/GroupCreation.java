@@ -77,7 +77,10 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	}
 
 	private Group createPrivateGroup(GroupRepository repository, List<User> users, User user) {
-		PrivateGroup group = new PrivateGroup(users, GroupType.Private, user);
+		List<User> admins = new ArrayList<>();
+		admins.add(user);
+		
+		PrivateGroup group = new PrivateGroup(users, GroupType.Private, admins);
 
 		repository.add(group);
 		return group;

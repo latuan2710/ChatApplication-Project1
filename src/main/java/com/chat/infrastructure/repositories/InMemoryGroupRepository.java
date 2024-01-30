@@ -62,4 +62,19 @@ public class InMemoryGroupRepository extends InMemoryRepository<Group> implement
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public PublicGroup findByJoiningCode(String code) {
+		List<PublicGroup> groups = this.getAllPublicGroup();
+		PublicGroup result = null;
+
+		for (PublicGroup group : groups) {
+			if (group.getJOINING_CODE().equals(code)) {
+				result = group;
+				break;
+			}
+		}
+
+		return result;
+	}
+
 }
