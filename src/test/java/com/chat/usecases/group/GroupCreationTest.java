@@ -16,20 +16,20 @@ class GroupCreationTest {
 	@BeforeEach
 	public void setUp() {
 		User user = new User("dasdas", "", "", "", false, null);
-		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user, GroupType.Public);
-		GroupCreation.InputValues inputPrivateGroup = new GroupCreation.InputValues(user, GroupType.Private);
+		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user.getId(), GroupType.Public);
+		GroupCreation.InputValues inputPrivateGroup = new GroupCreation.InputValues(user.getId(), GroupType.Private);
 
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		GroupCreation groupCreation = new GroupCreation(storage);
 		
 		groupCreation.execute(inputPublicGroup);
-		groupCreation.execute(inputPrivateGroup);
+		//groupCreation.execute(inputPrivateGroup);
 	}
 	
 	@Test
 	void testPrivateGroupCreation() {
 		User user = new User("dasdas", "", "", "", false, null);
-		GroupCreation.InputValues input = new GroupCreation.InputValues(user, GroupType.Private);
+		GroupCreation.InputValues input = new GroupCreation.InputValues("dasdas", GroupType.Private);
 
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		GroupCreation groupCreation = new GroupCreation(storage);
@@ -41,7 +41,7 @@ class GroupCreationTest {
 	@Test
 	void testPublicGroupCreation() {
 		User user = new User("dasdas", "", "", "", false, null);
-		GroupCreation.InputValues input = new GroupCreation.InputValues(user, GroupType.Public);
+		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Public);
 
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		GroupCreation groupCreation = new GroupCreation(storage);

@@ -20,11 +20,11 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	}
 
 	public static class InputValues {
-		private User _user;
+		private String _userId;
 		private GroupType _type;
 
-		public InputValues(User user, GroupType type) {
-			this._user = user;
+		public InputValues(String userId, GroupType type) {
+			this._userId = userId;
 			this._type = type;
 		}
 	}
@@ -34,9 +34,9 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 		private String _message;
 		private Group _group;
 
-		public OutputValues(GroupCreationResult result, String message, Group group) {
+		public OutputValues(GroupCreationResult result, String messageId, Group group) {
 			this._result = result;
-			this._message = message;
+			this._message = messageId;
 			this._group = group;
 		}
 
@@ -44,7 +44,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 			return _result;
 		}
 
-		public String getMessage() {
+		public String getMessageId() {
 			return _message;
 		}
 
@@ -62,7 +62,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	public OutputValues execute(InputValues input) {
 		GroupRepository repository = (GroupRepository) _dataStorage.getGroupRepository();
 		List<User> users = new ArrayList<>();
-		User user = input._user;
+		User user = _dataStorage.getUserRepository().getById(input._userId);
 		Group group = null;
 
 		users.add(user);
@@ -79,7 +79,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	private Group createPrivateGroup(GroupRepository repository, List<User> users, User user) {
 		List<User> admins = new ArrayList<>();
 		admins.add(user);
-		
+
 		PrivateGroup group = new PrivateGroup(users, GroupType.Private, admins);
 
 		repository.add(group);

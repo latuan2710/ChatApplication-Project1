@@ -17,10 +17,10 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 	}
 
 	public static class InputValues {
-		private User _user;
+		private String _userId;
 
-		public InputValues(User user) {
-			this._user = user;
+		public InputValues(String userId) {
+			this._userId = userId;
 		}
 	}
 
@@ -61,7 +61,7 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 			return new OutputValues(GettingGroupResult.Successed, "", result);
 		}
 
-		User userInput = input._user;
+		User userInput =  _dataStorage.getUserRepository().getById(input._userId);
 		for (Group group : groups) {
 			for (User u : group.getUsers()) {
 				if (u.equals(userInput)) {

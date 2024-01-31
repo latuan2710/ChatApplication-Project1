@@ -4,6 +4,7 @@ import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.GroupRepository;
 import com.chat.usecases.adapters.Repository;
 import com.chat.domains.Group;
+import com.chat.domains.Message;
 import com.chat.domains.User;
 import com.chat.infrastructure.repositories.InMemoryGroupRepository;
 import com.chat.infrastructure.repositories.InMemoryRepository;
@@ -11,12 +12,14 @@ import com.chat.infrastructure.repositories.InMemoryRepository;
 public class InMemoryDataStorage implements DataStorage {
 	private Repository<User> _users;
 	private GroupRepository _groups;
+	private Repository<Message> _messages;
 
 	private static InMemoryDataStorage _storage;
 
 	private InMemoryDataStorage() {
 		_users = new InMemoryRepository<User>();
 		_groups = new InMemoryGroupRepository();
+		_messages = new InMemoryRepository<Message>();
 	}
 
 	public static InMemoryDataStorage getInstance() {
@@ -37,8 +40,15 @@ public class InMemoryDataStorage implements DataStorage {
 	}
 
 	@Override
+	public Repository<Message> getMessageRepository() {
+		return _messages;
+	}
+
+	@Override
 	public void cleanAll() {
 		_users.deleteAll();
 		_groups.deleteAll();
+		_messages.deleteAll();
 	}
+
 }
