@@ -27,8 +27,8 @@ class GroupJoiningTest {
 
 		storage.getUserRepository().add(user);
 
-		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user, GroupType.Public);
-		GroupCreation.InputValues inputPrivateGroup = new GroupCreation.InputValues(user, GroupType.Private);
+		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user.getId(), GroupType.Public);
+		GroupCreation.InputValues inputPrivateGroup = new GroupCreation.InputValues(user.getId(), GroupType.Private);
 
 		groupCreation.execute(inputPublicGroup);
 		groupCreation.execute(inputPrivateGroup);
@@ -48,7 +48,7 @@ class GroupJoiningTest {
 		User invitor = storage.getUserRepository().getAll().get(0);
 		PublicGroup group = storage.getGroupRepository().getAllPublicGroup().get(0);
 
-		GroupJoining.InputValues input = new GroupJoining.InputValues(user, invitor, group);
+		GroupJoining.InputValues input = new GroupJoining.InputValues(user.getId(), invitor.getId(), group.getId());
 		GroupJoining groupJoining = new GroupJoining(storage);
 		GroupJoining.OutputValues output = groupJoining.execute(input);
 
@@ -63,7 +63,7 @@ class GroupJoiningTest {
 		User invitor = new User("dasdas", "", "", "", false, null);
 		PublicGroup group = storage.getGroupRepository().getAllPublicGroup().get(0);
 
-		GroupJoining.InputValues input = new GroupJoining.InputValues(user, invitor, group);
+		GroupJoining.InputValues input = new GroupJoining.InputValues(user.getId(), invitor.getId(), group.getId());
 		GroupJoining groupJoining = new GroupJoining(storage);
 		GroupJoining.OutputValues output = groupJoining.execute(input);
 
@@ -77,7 +77,7 @@ class GroupJoiningTest {
 		User user = new User("dasdas", "", "", "", false, null);
 		PublicGroup group = storage.getGroupRepository().getAllPublicGroup().get(0);
 
-		GroupJoining.InputValues input = new GroupJoining.InputValues(user, group.getJOINING_CODE());
+		GroupJoining.InputValues input = new GroupJoining.InputValues(user.getId(), group.getJOINING_CODE());
 		GroupJoining groupJoining = new GroupJoining(storage);
 		GroupJoining.OutputValues output = groupJoining.execute(input);
 
@@ -90,7 +90,7 @@ class GroupJoiningTest {
 
 		User user = new User("dasdas", "", "", "", false, null);
 
-		GroupJoining.InputValues input = new GroupJoining.InputValues(user, "VGVVVVV");
+		GroupJoining.InputValues input = new GroupJoining.InputValues(user.getId(), "VGVVVVV");
 		GroupJoining groupJoining = new GroupJoining(storage);
 		GroupJoining.OutputValues output = groupJoining.execute(input);
 
@@ -105,7 +105,7 @@ class GroupJoiningTest {
 		PrivateGroup group = storage.getGroupRepository().getAllPrivateGroup().get(0);
 		User admin = group.getAdmins().get(0);
 
-		GroupJoining.InputValues input = new GroupJoining.InputValues(user, admin, group);
+		GroupJoining.InputValues input = new GroupJoining.InputValues(user.getId(), admin.getId(), group.getId());
 		GroupJoining groupJoining = new GroupJoining(storage);
 		GroupJoining.OutputValues output = groupJoining.execute(input);
 
@@ -120,7 +120,7 @@ class GroupJoiningTest {
 		PrivateGroup group = storage.getGroupRepository().getAllPrivateGroup().get(0);
 		User admin = new User("dasdas", "", "", "", false, null);
 
-		GroupJoining.InputValues input = new GroupJoining.InputValues(user, admin, group);
+		GroupJoining.InputValues input = new GroupJoining.InputValues(user.getId(), admin.getId(), group.getId());
 		GroupJoining groupJoining = new GroupJoining(storage);
 		GroupJoining.OutputValues output = groupJoining.execute(input);
 

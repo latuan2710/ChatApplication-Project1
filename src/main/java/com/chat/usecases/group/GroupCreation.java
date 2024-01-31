@@ -34,9 +34,9 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 		private String _message;
 		private Group _group;
 
-		public OutputValues(GroupCreationResult result, String message, Group group) {
+		public OutputValues(GroupCreationResult result, String messageId, Group group) {
 			this._result = result;
-			this._message = message;
+			this._message = messageId;
 			this._group = group;
 		}
 
@@ -44,7 +44,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 			return _result;
 		}
 
-		public String getMessage() {
+		public String getMessageId() {
 			return _message;
 		}
 
@@ -79,7 +79,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	private Group createPrivateGroup(GroupRepository repository, List<User> users, User user) {
 		List<User> admins = new ArrayList<>();
 		admins.add(user);
-		
+
 		PrivateGroup group = new PrivateGroup(users, GroupType.Private, admins);
 
 		repository.add(group);

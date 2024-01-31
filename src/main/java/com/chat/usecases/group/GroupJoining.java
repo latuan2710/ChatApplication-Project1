@@ -8,6 +8,8 @@ import com.chat.domains.PublicGroup;
 import com.chat.domains.User;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
+import com.chat.usecases.adapters.GroupRepository;
+import com.chat.usecases.adapters.Repository;
 
 public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining.OutputValues> {
 	private DataStorage _dataStorage;
@@ -17,20 +19,20 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 	}
 
 	public static class InputValues {
-		private User _user;
-		private User _invitor;
-		private Group _group;
+		private String _userId;
+		private String _invitorId;
+		private String _groupId;
 		private String _inviteCode;
 
-		public InputValues(User user, User invitor, Group group) {
-			this._user = user;
-			this._invitor = invitor;
-			this._group = group;
+		public InputValues(String userId, String invitorId, String group) {
+			this._userId = userId;
+			this._invitorId = invitorId;
+			this._groupId = group;
 		}
 
-		public InputValues(User user, String inviteCode) {
+		public InputValues(String userId, String inviteCode) {
 			super();
-			this._user = user;
+			this._userId = userId;
 			this._inviteCode = inviteCode;
 		}
 
@@ -61,19 +63,23 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 
 	@Override
 	public OutputValues execute(InputValues input) {
+		Repository<User> userRepository = _dataStorage.getUserRepository();
+		GroupRepository groupRepository = _dataStorage.getGroupRepository();
 		String inviteCode = input._inviteCode;
-		Group inputGroup = input._group;
-
+		Group inputGroup = groupRepository.getById(input._groupId);
+		User user = userRepository.getById(input._userId);
+		User invitor = userRepository.getById(input._invitorId);
+		
 		boolean isJoinedByCode = false;
 		boolean isJoinedByMember = false;
 		boolean isJoinByAdmin = false;
-
+		
 		if (inviteCode != null) {
-			isJoinedByCode = joinByCode(inviteCode, input._user);
+			isJoinedByCode = joinByCode(inviteCode,user);
 		} else if (inputGroup instanceof PublicGroup) {
-			isJoinedByMember = joinByMember((PublicGroup) inputGroup, input._invitor, input._user);
+			isJoinedByMember = joinByMember((PublicGroup) inputGroup, invitor, user);
 		} else if (inputGroup instanceof PrivateGroup) {
-			isJoinByAdmin = joinByAdmin((PrivateGroup) inputGroup, input._invitor, input._user);
+			isJoinByAdmin = joinByAdmin((PrivateGroup) inputGroup,  invitor, user);
 		}
 
 		return (isJoinedByCode || isJoinedByMember || isJoinByAdmin)

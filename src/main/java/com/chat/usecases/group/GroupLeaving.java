@@ -14,13 +14,13 @@ public class GroupLeaving extends UseCase<GroupLeaving.InputValues, GroupLeaving
 	}
 
 	public static class InputValues {
-		private User _user;
-		private Group _group;
+		private String _userId;
+		private String _groupId;
 
-		public InputValues(User _user, Group _group) {
+		public InputValues(String userId, String groupId) {
 			super();
-			this._user = _user;
-			this._group = _group;
+			this._userId = userId;
+			this._groupId = groupId;
 		}
 	}
 
@@ -42,8 +42,8 @@ public class GroupLeaving extends UseCase<GroupLeaving.InputValues, GroupLeaving
 
 	@Override
 	public OutputValues execute(InputValues input) {
-		Group groupInput = input._group;
-		User userInput = input._user;
+		Group groupInput = _dataStorage.getGroupRepository().getById(input._groupId);
+		User userInput = _dataStorage.getUserRepository().getById(input._userId);
 
 		for (User user : groupInput.getUsers()) {
 			if (user.equals(userInput)) {
