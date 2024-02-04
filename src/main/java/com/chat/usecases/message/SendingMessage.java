@@ -1,34 +1,57 @@
 package com.chat.usecases.message;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.chat.domains.ChatEntity;
+import com.chat.domains.File;
+import com.chat.domains.File.FileType;
+import com.chat.domains.Message;
 import com.chat.domains.User;
+import com.chat.infrastructure.services.FileService;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
+import com.chat.usecases.adapters.Repository;
 import com.chat.usecases.user.UserRegistration.RegisterResult;
 
 public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingMessage.OutputValues> {
 	private DataStorage _dataStorage;
 
+	public SendingMessage(DataStorage dataStorage) {
+		this._dataStorage = dataStorage;
+	}
+
 	public static class InputValues {
-		private User _sender;
-		private ChatEntity _receiver;
+		private String _senderId;
+		private String _receiverId;
 		private String _text;
-		private List<byte[]> _files;
+		private Map<byte[], FileType> _files;
+
+		public InputValues(String senderId, String receiverId, String text, Map<byte[], FileType> files) {
+			this._senderId = senderId;
+			this._receiverId = receiverId;
+			this._text = text;
+			this._files = files;
+		}
 
 	}
 
 	public static class OutputValues {
-		private RegisterResult _result;
+		private SendingMessageResult _result;
 		private String _message;
 
-		public OutputValues(RegisterResult result, String message) {
+		public OutputValues(SendingMessageResult result, String message) {
 			_message = message;
 			_result = result;
 		}
 
-		public RegisterResult getResult() {
+		public SendingMessageResult getResult() {
 			return _result;
 		}
 
@@ -37,12 +60,40 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 		}
 	}
 
-	public static enum RegisterResult {
+	public static enum SendingMessageResult {
 		Successed, Failed
 	}
 
 	@Override
 	public OutputValues execute(InputValues input) {
-		return null;
+		if (input._text.isBlank() || input._text.isEmpty()) {
+			return new OutputValues(SendingMessageResult.Failed, "");
+		}
+
+		Repository<User> userRepository = _dataStorage.getUserRepository();
+		Repository<Message> messageRepository = _dataStorage.getMessageRepository();
+		FileService fileService = new FileService();
+
+		User sender = userRepository.getById(input._senderId);
+		User receiver = userRepository.getById(input._receiverId);
+
+		List<File> files = new ArrayList<>();
+		for (byte[] content : input._files.keySet()) {
+			if (content == null || content.length == 0) {
+				continue;
+			}
+
+			FileType fileType = input._files.get(content);
+			File file = new File(fileType);
+			file.setPath();
+			fileService.saveFile(content, file.getPath());
+			files.add(file);
+		}
+
+		Message message = new Message(sender, receiver, input._text, files);
+
+		messageRepository.add(message);
+
+		return new OutputValues(SendingMessageResult.Successed, "");
 	}
 }

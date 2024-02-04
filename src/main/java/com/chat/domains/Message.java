@@ -6,16 +6,16 @@ import java.util.List;
 public class Message extends ChatEntity {
 	private User _sender;
 	private ChatEntity _receiver;
-	private Date _timestamp;
-	private String _content;
+	private Date _time;
+	private String _text;
 	private List<File> _attachments;
 
-	public Message(User sender, ChatEntity receiver, Date timestamp, String content, List<File> attachments) {
+	public Message(User sender, ChatEntity receiver, String text, List<File> attachments) {
 		super();
 		this._sender = sender;
 		this._receiver = receiver;
-		this._timestamp = timestamp;
-		this._content = content;
+		this._time = new Date();
+		this._text = text;
 		this._attachments = attachments;
 	}
 
@@ -36,19 +36,19 @@ public class Message extends ChatEntity {
 	}
 
 	public Date getTimestamp() {
-		return _timestamp;
+		return _time;
 	}
 
 	public void setTimestamp(Date timestamp) {
-		this._timestamp = timestamp;
+		this._time = timestamp;
 	}
 
 	public String getContent() {
-		return _content;
+		return _text;
 	}
 
 	public void setContent(String content) {
-		this._content = content;
+		this._text = content;
 	}
 
 	public List<File> getAttachments() {
