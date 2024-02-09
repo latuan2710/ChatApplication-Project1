@@ -45,4 +45,10 @@ public class InMemoryRepository<T extends BaseEntity> implements Repository<T> {
 	public List<T> getAll() {
 		return _enities;
 	}
+
+	@Override
+	public void deleteById(String id) {
+		T entity = this.getFirst(t -> t.getId().equals(id));
+		_enities.remove(entity);
+	}
 }

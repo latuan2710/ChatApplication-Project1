@@ -12,6 +12,8 @@ public interface Repository<T extends BaseEntity> {
 
 	void deleteAll();
 
+	void deleteById(String id);
+
 	T getFirst(Predicate<T> predicate);
 
 	List<T> getAll();

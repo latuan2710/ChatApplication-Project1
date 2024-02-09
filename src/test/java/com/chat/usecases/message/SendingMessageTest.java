@@ -30,15 +30,6 @@ class SendingMessageTest {
 
 	@BeforeEach
 	public void setUp() throws FileNotFoundException, IOException {
-		User user1 = new User("Tuan", "", "", "", false, null);
-		User user2 = new User("Nhan", "", "", "", false, null);
-		User user3 = new User("Nghia", "", "", "", false, null);
-
-		DataStorage storage = InMemoryDataStorage.getInstance();
-		storage.getUserRepository().add(user1);
-		storage.getUserRepository().add(user2);
-		storage.getUserRepository().add(user3);
-
 		FileService fileService = new FileService();
 		audio = fileService.readFile("file_example_MP3_700KB.mp3");
 		image = fileService.readFile("file_example_PNG_500kB.png");

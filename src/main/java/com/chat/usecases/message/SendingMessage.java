@@ -1,15 +1,9 @@
 package com.chat.usecases.message;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.chat.domains.ChatEntity;
 import com.chat.domains.File;
 import com.chat.domains.File.FileType;
 import com.chat.domains.Message;
@@ -18,7 +12,6 @@ import com.chat.infrastructure.services.FileService;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
-import com.chat.usecases.user.UserRegistration.RegisterResult;
 
 public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingMessage.OutputValues> {
 	private DataStorage _dataStorage;
