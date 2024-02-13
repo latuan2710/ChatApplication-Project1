@@ -1,6 +1,7 @@
 package com.chat.usecases.message;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,13 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 			this._receiverId = receiverId;
 			this._text = text;
 			this._files = files;
+		}
+
+		public InputValues(String senderId, String receiverId, String text) {
+			this._senderId = senderId;
+			this._receiverId = receiverId;
+			this._text = text;
+			this._files = new HashMap<>();
 		}
 
 	}
