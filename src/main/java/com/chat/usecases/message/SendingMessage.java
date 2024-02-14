@@ -1,15 +1,10 @@
 package com.chat.usecases.message;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.chat.domains.ChatEntity;
 import com.chat.domains.File;
 import com.chat.domains.File.FileType;
 import com.chat.domains.Message;
@@ -18,7 +13,6 @@ import com.chat.infrastructure.services.FileService;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
-import com.chat.usecases.user.UserRegistration.RegisterResult;
 
 public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingMessage.OutputValues> {
 	private DataStorage _dataStorage;
@@ -38,6 +32,13 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 			this._receiverId = receiverId;
 			this._text = text;
 			this._files = files;
+		}
+
+		public InputValues(String senderId, String receiverId, String text) {
+			this._senderId = senderId;
+			this._receiverId = receiverId;
+			this._text = text;
+			this._files = new HashMap<>();
 		}
 
 	}
@@ -74,8 +75,8 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 		Repository<Message> messageRepository = _dataStorage.getMessageRepository();
 		FileService fileService = new FileService();
 
-		User sender = userRepository.getById(input._senderId);
-		User receiver = userRepository.getById(input._receiverId);
+		User sender = userRepository.findById(input._senderId);
+		User receiver = userRepository.findById(input._receiverId);
 
 		List<File> files = new ArrayList<>();
 		for (byte[] content : input._files.keySet()) {

@@ -1,24 +1,12 @@
 package com.chat.usecases.message;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import com.chat.domains.ChatEntity;
 import com.chat.domains.File;
-import com.chat.domains.File.FileType;
 import com.chat.domains.Message;
 import com.chat.domains.User;
 import com.chat.infrastructure.services.FileService;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
-import com.chat.usecases.user.UserRegistration.RegisterResult;
 
 public class DeletingMessage extends UseCase<DeletingMessage.InputValues, DeletingMessage.OutputValues> {
 	private DataStorage _dataStorage;
@@ -66,14 +54,17 @@ public class DeletingMessage extends UseCase<DeletingMessage.InputValues, Deleti
 		Repository<Message> messageRepository = _dataStorage.getMessageRepository();
 		FileService fileService = new FileService();
 
-		User user = userRepository.getById(input._senderId);
-		Message message = messageRepository.getById(input._messageId);
+		User user = userRepository.findById(input._senderId);
+		Message message = messageRepository.findById(input._messageId);
+
+		if (user == null || message == null)
+			return new OutputValues(DeletingMessageResult.Failed, "");
 
 		if (user.getId().equals(message.getSender().getId())) {
 			for (File file : message.getAttachments()) {
 				fileService.deleteFile(file.getPath());
 			}
-			messageRepository.de
+			messageRepository.deleteById(input._messageId);
 			return new OutputValues(DeletingMessageResult.Successed, "");
 		} else {
 			return new OutputValues(DeletingMessageResult.Failed, "");

@@ -61,7 +61,7 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 			return new OutputValues(GettingGroupResult.Successed, "", result);
 		}
 
-		User userInput =  _dataStorage.getUserRepository().getById(input._userId);
+		User userInput =  _dataStorage.getUserRepository().findById(input._userId);
 		for (Group group : groups) {
 			for (User u : group.getUsers()) {
 				if (u.equals(userInput)) {

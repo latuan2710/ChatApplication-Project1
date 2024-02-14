@@ -16,7 +16,7 @@ public class InMemoryRepository<T extends BaseEntity> implements Repository<T> {
 	}
 
 	@Override
-	public T getById(String id) {
+	public T findById(String id) {
 		return getFirst(e -> e.getId().equals(id));
 	}
 
@@ -44,5 +44,11 @@ public class InMemoryRepository<T extends BaseEntity> implements Repository<T> {
 	@Override
 	public List<T> getAll() {
 		return _enities;
+	}
+
+	@Override
+	public void deleteById(String id) {
+		T entity = this.getFirst(t -> t.getId().equals(id));
+		_enities.remove(entity);
 	}
 }
