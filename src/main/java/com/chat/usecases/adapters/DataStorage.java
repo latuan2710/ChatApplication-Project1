@@ -9,7 +9,7 @@ public interface DataStorage {
 
 	Repository<Message> getMessageRepository();
 	
-	Repository<MessageHistory> getMessageHistoryRepository();
+	HistoryMessageRepository getMessageHistoryRepository();
 
 	GroupRepository getGroupRepository();
 

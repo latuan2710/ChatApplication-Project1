@@ -42,8 +42,8 @@ public class GroupLeaving extends UseCase<GroupLeaving.InputValues, GroupLeaving
 
 	@Override
 	public OutputValues execute(InputValues input) {
-		Group groupInput = _dataStorage.getGroupRepository().getById(input._groupId);
-		User userInput = _dataStorage.getUserRepository().getById(input._userId);
+		Group groupInput = _dataStorage.getGroupRepository().findById(input._groupId);
+		User userInput = _dataStorage.getUserRepository().findById(input._userId);
 
 		for (User user : groupInput.getUsers()) {
 			if (user.equals(userInput)) {

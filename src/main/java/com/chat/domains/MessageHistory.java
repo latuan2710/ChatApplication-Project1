@@ -1,19 +1,19 @@
 package com.chat.domains;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MessageHistory extends BaseEntity {
 	private final String MESSAGE_ID;
-	private Queue<String> _historyTexts;
+	private List<String> _historyTexts;
 
 	public MessageHistory(String messageId) {
 		super();
 		MESSAGE_ID = messageId;
-		this._historyTexts = new LinkedList<>();
+		this._historyTexts = new ArrayList<>();
 	}
 
-	public Queue<String> getHistoryTexts() {
+	public List<String> getHistoryTexts() {
 		return _historyTexts;
 	}
 

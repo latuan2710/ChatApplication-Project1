@@ -14,4 +14,5 @@ public class PublicGroup extends Group {
 		return JOINING_CODE;
 	}
 
+	
 }

@@ -54,8 +54,8 @@ public class DeletingMessage extends UseCase<DeletingMessage.InputValues, Deleti
 		Repository<Message> messageRepository = _dataStorage.getMessageRepository();
 		FileService fileService = new FileService();
 
-		User user = userRepository.getById(input._senderId);
-		Message message = messageRepository.getById(input._messageId);
+		User user = userRepository.findById(input._senderId);
+		Message message = messageRepository.findById(input._messageId);
 
 		if (user == null || message == null)
 			return new OutputValues(DeletingMessageResult.Failed, "");

@@ -75,8 +75,8 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 		Repository<Message> messageRepository = _dataStorage.getMessageRepository();
 		FileService fileService = new FileService();
 
-		User sender = userRepository.getById(input._senderId);
-		User receiver = userRepository.getById(input._receiverId);
+		User sender = userRepository.findById(input._senderId);
+		User receiver = userRepository.findById(input._receiverId);
 
 		List<File> files = new ArrayList<>();
 		for (byte[] content : input._files.keySet()) {

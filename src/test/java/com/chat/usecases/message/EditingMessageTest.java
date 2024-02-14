@@ -4,8 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,11 +47,11 @@ class EditingMessageTest {
 				"After Editing");
 		EditingMessage editingMessage = new EditingMessage(storage);
 		EditingMessage.OutputValues output = editingMessage.execute(inputValues);
-		Queue<String> historyText = storage.getMessageHistoryRepository()
-				.getFirst(m -> m.getMessageId().equals(message.getId())).getHistoryTexts();
+		List<String> historyText = storage.getMessageHistoryRepository().findHistoryByMessageId(message.getId())
+				.getHistoryTexts();
 
 		assertEquals("After Editing", output.getNewMessage().getContent());
-		assertEquals("Hello", historyText.peek());
+		assertEquals("Hello", historyText.get(0));
 	}
 
 	@Test

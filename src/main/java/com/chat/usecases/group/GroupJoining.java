@@ -65,21 +65,22 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 	public OutputValues execute(InputValues input) {
 		Repository<User> userRepository = _dataStorage.getUserRepository();
 		GroupRepository groupRepository = _dataStorage.getGroupRepository();
+
 		String inviteCode = input._inviteCode;
-		Group inputGroup = groupRepository.getById(input._groupId);
-		User user = userRepository.getById(input._userId);
-		User invitor = userRepository.getById(input._invitorId);
-		
+		Group inputGroup = groupRepository.findById(input._groupId);
+		User user = userRepository.findById(input._userId);
+		User invitor = userRepository.findById(input._invitorId);
+
 		boolean isJoinedByCode = false;
 		boolean isJoinedByMember = false;
 		boolean isJoinByAdmin = false;
-		
+
 		if (inviteCode != null) {
-			isJoinedByCode = joinByCode(inviteCode,user);
+			isJoinedByCode = joinByCode(inviteCode, user);
 		} else if (inputGroup instanceof PublicGroup) {
 			isJoinedByMember = joinByMember((PublicGroup) inputGroup, invitor, user);
 		} else if (inputGroup instanceof PrivateGroup) {
-			isJoinByAdmin = joinByAdmin((PrivateGroup) inputGroup,  invitor, user);
+			isJoinByAdmin = joinByAdmin((PrivateGroup) inputGroup, invitor, user);
 		}
 
 		return (isJoinedByCode || isJoinedByMember || isJoinByAdmin)
@@ -116,14 +117,9 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 	}
 
 	private boolean joinByAdmin(PrivateGroup inputGroup, User invitor, User user) {
-		List<User> admins = inputGroup.getAdmins();
-
-		for (int i = 0; i < admins.size(); i++) {
-			if (admins.get(i).equals(invitor)) {
-				admins.add(user);
-				inputGroup.setUsers(admins);
-				return true;
-			}
+		if (invitor != null && inputGroup.isAdmin(invitor)) {
+			inputGroup.addMember(user);
+			return true;
 		}
 
 		return false;

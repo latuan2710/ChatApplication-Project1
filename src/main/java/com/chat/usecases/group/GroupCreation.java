@@ -62,7 +62,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	public OutputValues execute(InputValues input) {
 		GroupRepository repository = (GroupRepository) _dataStorage.getGroupRepository();
 		List<User> users = new ArrayList<>();
-		User user = _dataStorage.getUserRepository().getById(input._userId);
+		User user = _dataStorage.getUserRepository().findById(input._userId);
 		Group group = null;
 
 		users.add(user);
@@ -70,7 +70,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 		if (input._type == GroupType.Public) {
 			group = createPublicGroup(repository, users);
 		} else {
-			group = createPrivateGroup(repository, users, user);
+			group = createPrivateGroup(repository, new ArrayList<>(), user);
 		}
 
 		return new OutputValues(GroupCreationResult.Successed, "", group);
