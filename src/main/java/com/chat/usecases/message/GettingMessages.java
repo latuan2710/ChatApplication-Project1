@@ -6,12 +6,14 @@ import java.util.function.Predicate;
 import com.chat.domains.Message;
 import com.chat.infrastructure.repositories.InMemoryMessageRepository;
 import com.chat.usecases.UseCase;
+import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.MessageRepository;
 
-public class GettingAllMessageByUserId
-		extends UseCase<GettingAllMessageByUserId.InputValues, GettingAllMessageByUserId.OutputValues> {
+public class GettingMessages extends UseCase<GettingMessages.InputValues, GettingMessages.OutputValues> {
+	private DataStorage _dataStorage;
 
-	public GettingAllMessageByUserId() {
+	public GettingMessages(DataStorage dataStorage) {
+		this._dataStorage = dataStorage;
 	}
 
 	public static class InputValues {
@@ -24,15 +26,15 @@ public class GettingAllMessageByUserId
 	}
 
 	public static class OutputValues {
-		private GettingAllMessageByUserIdResult _result;
+		private GettingMessagesResult _result;
 		private List<Message> _messages;
 
-		public OutputValues(GettingAllMessageByUserIdResult result, List<Message> messages) {
+		public OutputValues(GettingMessagesResult result, List<Message> messages) {
 			_messages = messages;
 			_result = result;
 		}
 
-		public GettingAllMessageByUserIdResult getResult() {
+		public GettingMessagesResult getResult() {
 			return _result;
 		}
 
@@ -41,13 +43,13 @@ public class GettingAllMessageByUserId
 		}
 	}
 
-	public static enum GettingAllMessageByUserIdResult {
+	public static enum GettingMessagesResult {
 		Successed, Failed
 	}
 
 	@Override
 	public OutputValues execute(InputValues input) {
-		MessageRepository messageMepository = new InMemoryMessageRepository();
+		MessageRepository messageMepository = _dataStorage.getMessageRepository();
 
 		Predicate<Message> predicate = m -> (m.getSender().getId().equals(input._senderId))
 				|| m.getReceiver().getId().equals(input._senderId);
@@ -56,6 +58,6 @@ public class GettingAllMessageByUserId
 
 		result = result.isEmpty() ? null : result;
 
-		return new OutputValues(GettingAllMessageByUserIdResult.Successed, result);
+		return new OutputValues(GettingMessagesResult.Successed, result);
 	}
 }

@@ -35,12 +35,12 @@ public class Message extends ChatEntity {
 		this._receiver = receiver;
 	}
 
-	public Date getTimestamp() {
+	public Date getTime() {
 		return _time;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this._time = timestamp;
+	public void setTime(Date time) {
+		this._time = time;
 	}
 
 	public String getContent() {
