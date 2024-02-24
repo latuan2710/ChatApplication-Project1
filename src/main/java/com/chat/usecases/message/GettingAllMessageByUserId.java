@@ -3,22 +3,15 @@ package com.chat.usecases.message;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.chat.domains.File;
 import com.chat.domains.Message;
-import com.chat.domains.User;
 import com.chat.infrastructure.repositories.InMemoryMessageRepository;
-import com.chat.infrastructure.services.FileService;
 import com.chat.usecases.UseCase;
-import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.MessageRepository;
-import com.chat.usecases.adapters.Repository;
 
 public class GettingAllMessageByUserId
 		extends UseCase<GettingAllMessageByUserId.InputValues, GettingAllMessageByUserId.OutputValues> {
-	private DataStorage _dataStorage;
 
-	public GettingAllMessageByUserId(DataStorage dataStorage) {
-		this._dataStorage = dataStorage;
+	public GettingAllMessageByUserId() {
 	}
 
 	public static class InputValues {
