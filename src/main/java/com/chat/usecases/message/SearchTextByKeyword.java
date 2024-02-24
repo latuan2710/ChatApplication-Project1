@@ -29,7 +29,6 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 		private String _receiverId;
 
 		public InputValues(String keyword, String _senderId, String _receiverId) {
-			super();
 			this._keyword = keyword;
 			this._senderId = _senderId;
 			this._receiverId = _receiverId;
@@ -39,10 +38,10 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 
 	public static class OutputValues {
 		private SearchTextByKeywordTestResult _result;
-		private Conversation _conversation;
+		private List<Message> _messages;
 
-		public OutputValues(SearchTextByKeywordTestResult result, Conversation conversation) {
-			_conversation = conversation;
+		public OutputValues(SearchTextByKeywordTestResult result, List<Message> messages) {
+			_messages = messages;
 			_result = result;
 		}
 
@@ -50,8 +49,8 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 			return _result;
 		}
 
-		public Conversation getConversation() {
-			return _conversation;
+		public List<Message> getMessage() {
+			return _messages;
 		}
 	}
 
@@ -79,9 +78,7 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 
 		messages = searchTextByKeyword(input._keyword, messages);
 
-		Conversation conversation = new Conversation(messages, List.of(sender, receiver));
-
-		return new OutputValues(SearchTextByKeywordTestResult.Successed, conversation);
+		return new OutputValues(SearchTextByKeywordTestResult.Successed, messages);
 	}
 
 	private List<Message> searchTextByKeyword(String keyword, List<Message> messages) {

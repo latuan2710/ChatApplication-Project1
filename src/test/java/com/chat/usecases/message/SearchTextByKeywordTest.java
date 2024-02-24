@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,13 +50,14 @@ class SearchTextByKeywordTest {
 		User sender = userRepository.getAll().get(0);
 		User receiver = userRepository.getAll().get(1);
 
-		SearchTextByKeyword.InputValues input = new SearchTextByKeyword.InputValues("6", sender.getId(), receiver.getId());
+		SearchTextByKeyword.InputValues input = new SearchTextByKeyword.InputValues("0", sender.getId(),
+				receiver.getId());
 		SearchTextByKeyword searchTextByKeyword = new SearchTextByKeyword(storage);
 		SearchTextByKeyword.OutputValues output = searchTextByKeyword.execute(input);
 
-		Conversation conversation = output.getConversation();
+		List<Message> messages = output.getMessage();
 
-		for (Message i : conversation.get_messages()) {
+		for (Message i : messages) {
 			System.out.println(i.getContent());
 		}
 //		assertEquals(3, conversation.get_messages().size());

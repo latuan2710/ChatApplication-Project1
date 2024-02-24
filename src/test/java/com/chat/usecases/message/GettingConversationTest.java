@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,12 +55,9 @@ class GettingConversationTest {
 		GettingConversation gettingConversation = new GettingConversation(storage);
 		GettingConversation.OutputValues output = gettingConversation.execute(input);
 
-		Conversation conversation = output.getConversation();
+		List<Message> messages = output.getmessages();
 
-		for (Message i : conversation.get_messages()) {
-			System.out.println(i.getContent());
-		}
-//		assertEquals(3, conversation.get_messages().size());
+		assertEquals(3, messages.size());
 
 	}
 }

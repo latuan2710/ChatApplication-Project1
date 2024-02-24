@@ -41,10 +41,10 @@ public class GettingConversation extends UseCase<GettingConversation.InputValues
 
 	public static class OutputValues {
 		private GettingConversationResult _result;
-		private Conversation _conversation;
+		private List<Message> _messages;
 
-		public OutputValues(GettingConversationResult result, Conversation conversation) {
-			_conversation = conversation;
+		public OutputValues(GettingConversationResult result, List<Message> messages) {
+			_messages = messages;
 			_result = result;
 		}
 
@@ -52,8 +52,8 @@ public class GettingConversation extends UseCase<GettingConversation.InputValues
 			return _result;
 		}
 
-		public Conversation getConversation() {
-			return _conversation;
+		public List<Message> getmessages() {
+			return _messages;
 		}
 	}
 
@@ -81,9 +81,7 @@ public class GettingConversation extends UseCase<GettingConversation.InputValues
 
 		messages = getTopLatestMessages(input._k, input._m, messages);
 
-		Conversation conversation = new Conversation(messages, List.of(sender, receiver));
-
-		return new OutputValues(GettingConversationResult.Successed, conversation);
+		return new OutputValues(GettingConversationResult.Successed, messages);
 	}
 
 	private List<Message> getTopLatestMessages(int k, int m, List<Message> messages) {
