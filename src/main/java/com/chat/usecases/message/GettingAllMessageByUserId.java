@@ -6,17 +6,21 @@ import java.util.function.Predicate;
 import com.chat.domains.Message;
 import com.chat.infrastructure.repositories.InMemoryMessageRepository;
 import com.chat.usecases.UseCase;
+import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.MessageRepository;
 
 public class GettingAllMessageByUserId
 		extends UseCase<GettingAllMessageByUserId.InputValues, GettingAllMessageByUserId.OutputValues> {
+	DataStorage _dataStorage;
 
-	public GettingAllMessageByUserId() {
+	public GettingAllMessageByUserId(DataStorage dataStorage) {
+		this._dataStorage = dataStorage;
 	}
 
 	public static class InputValues {
 		private String _senderId;
 
+		
 		public InputValues(String senderId) {
 			this._senderId = senderId;
 		}
@@ -47,7 +51,7 @@ public class GettingAllMessageByUserId
 
 	@Override
 	public OutputValues execute(InputValues input) {
-		MessageRepository messageMepository = new InMemoryMessageRepository();
+		MessageRepository messageMepository = _dataStorage.getMessageRepository();
 
 		Predicate<Message> predicate = m -> (m.getSender().getId().equals(input._senderId))
 				|| m.getReceiver().getId().equals(input._senderId);
