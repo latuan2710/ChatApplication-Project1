@@ -20,16 +20,4 @@ public class InMemoryMessageRepository extends InMemoryRepository<Message> imple
 		return result.isEmpty() ? null : result;
 	}
 
-	@Override
-	public List<File> getAllFileByUserId(String userId) {
-		List<Message> messages = this.getAllMessageByUserId(userId);
-		List<File> result = new ArrayList<>();
-
-		for (Message message : messages) {
-			result.addAll(message.getAttachments());
-		}
-
-		return result.isEmpty() ? null : result;
-	}
-
 }
