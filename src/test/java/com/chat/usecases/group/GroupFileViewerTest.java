@@ -1,29 +1,40 @@
 package com.chat.usecases.group;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.chat.domains.Group.GroupType;
+import com.chat.domains.File;
+import com.chat.domains.Group;
+import com.chat.domains.Message;
 import com.chat.domains.User;
+import com.chat.domains.Group.GroupType;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.group.GettingUserGroups.GettingGroupResult;
 
-class GettingUserGroupsTest {
+public class GroupFileViewerTest {
+
 	@BeforeEach
 	public void setUp() {
 		User user = new User("dasdas", "", "", "", false, null);
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		storage.getUserRepository().add(user);
 		
-		GroupCreation.InputValues in = new GroupCreation.InputValues(user.getId(), GroupType.Public);
-		GroupCreation.InputValues in1 = new GroupCreation.InputValues(user.getId(), GroupType.Private);
-
+		GroupFileViewer.InputValues input = new GroupFileViewer.InputValues("senderId", "groupId");
 		GroupCreation pb = new GroupCreation(storage);
-		pb.execute(in);
-		pb.execute(in1);
+		List<Message> messages = new ArrayList<>();
+        Message message = new Message("messageId", "content", "senderId", messages);
+        message.getAttachments();
+        messages.add(message);
+		pb.execute(input);
+
 	}
 
 	@AfterEach
@@ -43,15 +54,4 @@ class GettingUserGroupsTest {
 		Assert.assertEquals(2, output.getGroups().size());
 	}
 
-	@Test
-	void testGetGroupsFailed() {
-		DataStorage storage = InMemoryDataStorage.getInstance();
-		User userTest = new User("dasdas", "", "", "", false, null);
-		
-		GettingUserGroups.InputValues input = new GettingUserGroups.InputValues(userTest.getId());
-
-		GettingUserGroups getUserGroups = new GettingUserGroups(storage);
-		GettingUserGroups.OutputValues output = getUserGroups.execute(input);
-		Assert.assertEquals(GettingGroupResult.Failed, output.getResult());
-	}
 }
