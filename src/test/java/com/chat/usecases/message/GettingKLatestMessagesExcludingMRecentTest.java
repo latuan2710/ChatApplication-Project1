@@ -10,13 +10,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.chat.domains.Conversation;
 import com.chat.domains.Message;
 import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
-import com.chat.usecases.message.GettingKLatestMessagesExcludingMRecent.GettingKLatestMessagesExcludingMRecentResult;
 
 class GettingKLatestMessagesExcludingMRecentTest {
 

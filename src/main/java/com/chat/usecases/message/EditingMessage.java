@@ -6,7 +6,6 @@ import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.HistoryMessageRepository;
 import com.chat.usecases.adapters.Repository;
-import com.chat.usecases.message.DeletingMessage.DeletingMessageResult;
 
 public class EditingMessage extends UseCase<EditingMessage.InputValues, EditingMessage.OutputValues> {
 	private DataStorage _dataStorage;

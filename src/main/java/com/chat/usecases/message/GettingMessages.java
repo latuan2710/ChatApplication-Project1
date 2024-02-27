@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import com.chat.domains.Message;
-import com.chat.infrastructure.repositories.InMemoryMessageRepository;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.MessageRepository;

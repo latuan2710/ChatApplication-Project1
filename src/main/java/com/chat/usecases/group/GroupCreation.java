@@ -65,6 +65,10 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 		User user = _dataStorage.getUserRepository().findById(input._userId);
 		Group group = null;
 
+		if (user == null) {
+			return new OutputValues(GroupCreationResult.Failed, "", group);
+		}
+
 		users.add(user);
 
 		if (input._type == GroupType.Public) {

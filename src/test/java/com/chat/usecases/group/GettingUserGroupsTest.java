@@ -6,13 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.chat.domains.Group.GroupType;
-import com.chat.domains.PublicGroup;
 import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
-import com.chat.infrastructure.services.SHA256Hasher;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.group.GettingUserGroups.GettingGroupResult;
-import com.chat.usecases.user.UserRegistration;
 
 class GettingUserGroupsTest {
 	@BeforeEach

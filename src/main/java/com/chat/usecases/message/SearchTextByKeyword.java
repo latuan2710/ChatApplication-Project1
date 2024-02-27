@@ -1,20 +1,13 @@
 package com.chat.usecases.message;
 
-import static org.hamcrest.CoreMatchers.containsString;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.chat.domains.Conversation;
 import com.chat.domains.Message;
 import com.chat.domains.User;
-import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.adapters.MessageRepository;
 import com.chat.usecases.adapters.Repository;
-import com.chat.usecases.message.GettingMessages.GettingMessagesResult;
-import com.chat.usecases.user.UserRegistration;
 
 public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues, SearchTextByKeyword.OutputValues> {
 	DataStorage _dataStorage;
