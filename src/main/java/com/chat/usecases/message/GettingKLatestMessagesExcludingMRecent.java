@@ -13,13 +13,13 @@ import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.MessageRepository;
 import com.chat.usecases.adapters.Repository;
-import com.chat.usecases.message.GettingAllMessageByUserId.GettingAllMessageByUserIdResult;
+import com.chat.usecases.message.GettingMessages.GettingMessagesResult;
 import com.chat.usecases.user.UserRegistration;
 
-public class GettingConversation extends UseCase<GettingConversation.InputValues, GettingConversation.OutputValues> {
+public class GettingKLatestMessagesExcludingMRecent extends UseCase<GettingKLatestMessagesExcludingMRecent.InputValues, GettingKLatestMessagesExcludingMRecent.OutputValues> {
 	DataStorage _dataStorage;
 
-	public GettingConversation(DataStorage dataStorage) {
+	public GettingKLatestMessagesExcludingMRecent(DataStorage dataStorage) {
 		this._dataStorage = dataStorage;
 	}
 
@@ -29,26 +29,25 @@ public class GettingConversation extends UseCase<GettingConversation.InputValues
 		private String _senderId;
 		private String _receiverId;
 
-		public InputValues(int k, int m, String _senderId, String _receiverId) {
-			super();
+		public InputValues(int k, int m, String senderId, String receiverId) {
 			this._k = k;
 			this._m = m;
-			this._senderId = _senderId;
-			this._receiverId = _receiverId;
+			this._senderId = senderId;
+			this._receiverId = receiverId;
 		}
 
 	}
 
 	public static class OutputValues {
-		private GettingConversationResult _result;
+		private GettingKLatestMessagesExcludingMRecentResult _result;
 		private List<Message> _messages;
 
-		public OutputValues(GettingConversationResult result, List<Message> messages) {
+		public OutputValues(GettingKLatestMessagesExcludingMRecentResult result, List<Message> messages) {
 			_messages = messages;
 			_result = result;
 		}
 
-		public GettingConversationResult getResult() {
+		public GettingKLatestMessagesExcludingMRecentResult getResult() {
 			return _result;
 		}
 
@@ -57,7 +56,7 @@ public class GettingConversation extends UseCase<GettingConversation.InputValues
 		}
 	}
 
-	public static enum GettingConversationResult {
+	public static enum GettingKLatestMessagesExcludingMRecentResult {
 		Successed, Failed
 	}
 
@@ -68,10 +67,10 @@ public class GettingConversation extends UseCase<GettingConversation.InputValues
 		User sender = userRepository.findById(input._senderId);
 		User receiver = userRepository.findById(input._receiverId);
 
-		GettingAllMessageByUserId.InputValues gettingAllMessagesInput = new GettingAllMessageByUserId.InputValues(
+		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(
 				input._senderId);
-		GettingAllMessageByUserId gettingAllMessages = new GettingAllMessageByUserId(_dataStorage);
-		GettingAllMessageByUserId.OutputValues gettingAllMessagesOutput = gettingAllMessages
+		GettingMessages gettingAllMessages = new GettingMessages(_dataStorage);
+		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages
 				.execute(gettingAllMessagesInput);
 
 		List<Message> messages = gettingAllMessagesOutput.getMessages();
@@ -81,7 +80,7 @@ public class GettingConversation extends UseCase<GettingConversation.InputValues
 
 		messages = getTopLatestMessages(input._k, input._m, messages);
 
-		return new OutputValues(GettingConversationResult.Successed, messages);
+		return new OutputValues(GettingKLatestMessagesExcludingMRecentResult.Successed, messages);
 	}
 
 	private List<Message> getTopLatestMessages(int k, int m, List<Message> messages) {

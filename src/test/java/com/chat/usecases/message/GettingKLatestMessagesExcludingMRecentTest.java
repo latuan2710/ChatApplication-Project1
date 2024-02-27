@@ -16,8 +16,9 @@ import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
+import com.chat.usecases.message.GettingKLatestMessagesExcludingMRecent.GettingKLatestMessagesExcludingMRecentResult;
 
-class GettingConversationTest {
+class GettingKLatestMessagesExcludingMRecentTest {
 
 	@BeforeEach
 	public void setUp() throws FileNotFoundException, IOException {
@@ -44,16 +45,16 @@ class GettingConversationTest {
 	}
 
 	@Test
-	void testGetConversationBetweenUser() {
+	void testGetKLatestMessagesExcludingMRecent() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Repository<User> userRepository = storage.getUserRepository();
 		User sender = userRepository.getAll().get(0);
 		User receiver = userRepository.getAll().get(1);
 
-		GettingConversation.InputValues input = new GettingConversation.InputValues(3, 0, sender.getId(),
+		GettingKLatestMessagesExcludingMRecent.InputValues input = new GettingKLatestMessagesExcludingMRecent.InputValues(3, 0, sender.getId(),
 				receiver.getId());
-		GettingConversation gettingConversation = new GettingConversation(storage);
-		GettingConversation.OutputValues output = gettingConversation.execute(input);
+		GettingKLatestMessagesExcludingMRecent gettingConversation = new GettingKLatestMessagesExcludingMRecent(storage);
+		GettingKLatestMessagesExcludingMRecent.OutputValues output = gettingConversation.execute(input);
 
 		List<Message> messages = output.getmessages();
 

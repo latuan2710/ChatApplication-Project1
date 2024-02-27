@@ -13,7 +13,7 @@ import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.MessageRepository;
 import com.chat.usecases.adapters.Repository;
-import com.chat.usecases.message.GettingAllMessageByUserId.GettingAllMessageByUserIdResult;
+import com.chat.usecases.message.GettingMessages.GettingMessagesResult;
 import com.chat.usecases.user.UserRegistration;
 
 public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues, SearchTextByKeyword.OutputValues> {
@@ -65,10 +65,10 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 		User sender = userRepository.findById(input._senderId);
 		User receiver = userRepository.findById(input._receiverId);
 
-		GettingAllMessageByUserId.InputValues gettingAllMessagesInput = new GettingAllMessageByUserId.InputValues(
+		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(
 				input._senderId);
-		GettingAllMessageByUserId gettingAllMessages = new GettingAllMessageByUserId(_dataStorage);
-		GettingAllMessageByUserId.OutputValues gettingAllMessagesOutput = gettingAllMessages
+		GettingMessages gettingAllMessages = new GettingMessages(_dataStorage);
+		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages
 				.execute(gettingAllMessagesInput);
 
 		List<Message> messages = gettingAllMessagesOutput.getMessages();

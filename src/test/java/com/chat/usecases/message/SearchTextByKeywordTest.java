@@ -57,10 +57,10 @@ class SearchTextByKeywordTest {
 
 		List<Message> messages = output.getMessage();
 
-		for (Message i : messages) {
-			System.out.println(i.getContent());
-		}
-//		assertEquals(3, conversation.get_messages().size());
+//		for (Message i : messages) {
+//			System.out.println(i.getContent());
+//		}
+		assertEquals(1, output.getMessage().size());
 
 	}
 }
