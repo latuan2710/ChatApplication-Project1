@@ -23,13 +23,13 @@ class GroupCreationTest {
 		GroupCreation groupCreation = new GroupCreation(storage);
 		
 		groupCreation.execute(inputPublicGroup);
-		//groupCreation.execute(inputPrivateGroup);
+		groupCreation.execute(inputPrivateGroup);
 	}
 	
 	@Test
 	void testPrivateGroupCreation() {
 		User user = new User("dasdas", "", "", "", false, null);
-		GroupCreation.InputValues input = new GroupCreation.InputValues("dasdas", GroupType.Private);
+		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Private);
 
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		GroupCreation groupCreation = new GroupCreation(storage);

@@ -1,17 +1,14 @@
 package com.chat.usecases.group;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.chat.domains.User;
-import com.chat.domains.Group;
 import com.chat.domains.Group.GroupType;
 import com.chat.domains.PrivateGroup;
 import com.chat.domains.PublicGroup;
+import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.group.GroupJoining.GroupJoiningResult;
