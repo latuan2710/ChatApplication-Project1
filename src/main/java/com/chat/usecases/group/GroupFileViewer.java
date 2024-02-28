@@ -8,13 +8,10 @@ import java.util.stream.Collectors;
 import com.chat.domains.File;
 import com.chat.domains.Group;
 import com.chat.domains.Message;
-import com.chat.infrastructure.repositories.InMemoryMessageRepository;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.GroupRepository;
-import com.chat.usecases.adapters.MessageRepository;
-import com.chat.usecases.message.GettingAllMessageByUserId;
-import com.chat.usecases.message.GettingAllMessageByUserId.GettingAllMessageByUserIdResult;
+import com.chat.usecases.message.GettingMessages;
 
 public class GroupFileViewer extends UseCase<GroupFileViewer.InputValues, GroupFileViewer.OutputValues> {
 	private DataStorage _dataStorage;
@@ -62,10 +59,9 @@ public class GroupFileViewer extends UseCase<GroupFileViewer.InputValues, GroupF
 	public OutputValues execute(InputValues input) {
 		GroupRepository groupRepository = _dataStorage.getGroupRepository();
 
-		GettingAllMessageByUserId.InputValues gettingMessageInput = new GettingAllMessageByUserId.InputValues(
-				input._senderId);
-		GettingAllMessageByUserId gettingMessage = new GettingAllMessageByUserId();
-		GettingAllMessageByUserId.OutputValues gettingMessageOutput = gettingMessage.execute(gettingMessageInput);
+		GettingMessages.InputValues gettingMessageInput = new GettingMessages.InputValues(input._senderId);
+		GettingMessages gettingMessage = new GettingMessages(_dataStorage);
+		GettingMessages.OutputValues gettingMessageOutput = gettingMessage.execute(gettingMessageInput);
 
 		List<Message> messages = gettingMessageOutput.getMessages();
 		Group group = groupRepository.findById(input._groupId);

@@ -67,7 +67,6 @@ public class EditingMessage extends UseCase<EditingMessage.InputValues, EditingM
 
 			history.addText(message.getContent());
 			message.setContent(input._newText);
-			
 
 			return new OutputValues(EditingMessageResult.Successed, message);
 		}
