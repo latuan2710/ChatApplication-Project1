@@ -17,19 +17,17 @@ public class GroupFileViewer extends UseCase<GroupFileViewer.InputValues, GroupF
 	private DataStorage _dataStorage;
 
 	public GroupFileViewer(DataStorage dataStorage) {
-		super();
 		this._dataStorage = dataStorage;
 	}
 
 	public static class InputValues {
-		private String _senderId;
+		private String _userId;
 		private String _groupId;
 
 		public InputValues(String senderId, String groupId) {
-			this._senderId = senderId;
+			this._userId = senderId;
 			this._groupId = groupId;
 		}
-
 	}
 
 	public static class OutputValues {
@@ -59,15 +57,15 @@ public class GroupFileViewer extends UseCase<GroupFileViewer.InputValues, GroupF
 	public OutputValues execute(InputValues input) {
 		GroupRepository groupRepository = _dataStorage.getGroupRepository();
 
-		GettingMessages.InputValues gettingMessageInput = new GettingMessages.InputValues(input._senderId);
+		GettingMessages.InputValues gettingMessageInput = new GettingMessages.InputValues(input._userId);
 		GettingMessages gettingMessage = new GettingMessages(_dataStorage);
 		GettingMessages.OutputValues gettingMessageOutput = gettingMessage.execute(gettingMessageInput);
 
 		List<Message> messages = gettingMessageOutput.getMessages();
-		Group group = groupRepository.findById(input._groupId);
 
-		Predicate<Message> groupMessagePredicate = m -> m.getReceiver().equals(group);
-		messages = messages.stream().filter(groupMessagePredicate).collect(Collectors.toList());
+		Group group = groupRepository.findById(input._groupId);
+		Predicate<Message> groupMessagePredicate = m -> m.getReceiver().getId().equals(group.getId());
+		messages = messages.stream().filter(groupMessagePredicate).toList();
 
 		if (messages.isEmpty()) {
 			return new OutputValues(GettingAllFileResult.Successed, null);

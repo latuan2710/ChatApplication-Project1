@@ -11,7 +11,6 @@ import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.group.GettingUserGroups.GettingGroupResult;
 
-Cần Phải Sửa
 class GettingUserGroupsTest {
 	@BeforeEach
 	public void setUp() {

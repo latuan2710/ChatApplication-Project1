@@ -11,28 +11,30 @@ import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.group.GroupCreation.GroupCreationResult;
 
-Cần Phải Sửa
 class GroupCreationTest {
 
 	@BeforeEach
 	public void setUp() {
+		DataStorage storage = InMemoryDataStorage.getInstance();
+
 		User user = new User("dasdas", "", "", "", false, null);
+		storage.getUserRepository().add(user);
+
 		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user.getId(), GroupType.Public);
 		GroupCreation.InputValues inputPrivateGroup = new GroupCreation.InputValues(user.getId(), GroupType.Private);
 
-		DataStorage storage = InMemoryDataStorage.getInstance();
 		GroupCreation groupCreation = new GroupCreation(storage);
-		
+
 		groupCreation.execute(inputPublicGroup);
 		groupCreation.execute(inputPrivateGroup);
 	}
-	
+
 	@Test
 	void testPrivateGroupCreation() {
-		User user = new User("dasdas", "", "", "", false, null);
+		DataStorage storage = InMemoryDataStorage.getInstance();
+		User user = storage.getUserRepository().getAll().get(0);
 		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Private);
 
-		DataStorage storage = InMemoryDataStorage.getInstance();
 		GroupCreation groupCreation = new GroupCreation(storage);
 		GroupCreation.OutputValues output = groupCreation.execute(input);
 
@@ -41,10 +43,10 @@ class GroupCreationTest {
 
 	@Test
 	void testPublicGroupCreation() {
-		User user = new User("dasdas", "", "", "", false, null);
+		DataStorage storage = InMemoryDataStorage.getInstance();
+		User user = storage.getUserRepository().getAll().get(0);
 		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Public);
 
-		DataStorage storage = InMemoryDataStorage.getInstance();
 		GroupCreation groupCreation = new GroupCreation(storage);
 		GroupCreation.OutputValues output = groupCreation.execute(input);
 

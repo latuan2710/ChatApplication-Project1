@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chat.domains.Group;
+import com.chat.domains.PrivateGroup;
+import com.chat.domains.PublicGroup;
 import com.chat.domains.User;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
@@ -61,15 +63,18 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 			return new OutputValues(GettingGroupResult.Successed, "", result);
 		}
 
-		User userInput =  _dataStorage.getUserRepository().findById(input._userId);
+		User userInput = _dataStorage.getUserRepository().findById(input._userId);
 		for (Group group : groups) {
-			for (User u : group.getUsers()) {
-				if (u.equals(userInput)) {
+			if (group instanceof PublicGroup && group.getUsers().contains(userInput)) {
+				result.add(group);
+			} else if (group instanceof PrivateGroup) {
+				PrivateGroup privateGroup = (PrivateGroup) group;
+				if (privateGroup.getUsers().contains(userInput) || privateGroup.getAdmins().contains(userInput)) {
 					result.add(group);
 				}
 			}
 		}
-		
+
 		if (result.isEmpty()) {
 			return new OutputValues(GettingGroupResult.Failed, "", result);
 		} else {
