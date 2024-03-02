@@ -1,7 +1,9 @@
 package com.chat.usecases.group;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import com.chat.domains.Group;
 import com.chat.domains.Group.GroupType;
@@ -91,11 +93,45 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	}
 
 	private Group createPublicGroup(GroupRepository repository, List<User> users) {
-		String joiningCode = repository.generateJoiningCode();
+		String joiningCode = this.generateJoiningCode(repository);
 		PublicGroup group = new PublicGroup(users, GroupType.Public, joiningCode);
 
 		repository.add(group);
 		return group;
 	}
 
+	private String generateJoiningCode(GroupRepository groupRepository) {
+		List<PublicGroup> groups = groupRepository.getAllPublicGroup();
+		HashSet<String> existCodes = new HashSet<>();
+
+		for (PublicGroup group : groups) {
+			existCodes.add(group.getJOINING_CODE());
+		}
+
+		String joining_code = null;
+		boolean flag = true;
+
+		while (flag) {
+			joining_code = this.getRandomString(6);
+
+			if (!existCodes.contains(joining_code)) {
+				flag = false;
+			}
+		}
+
+		return joining_code;
+	}
+
+	private String getRandomString(int length) {
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+		StringBuilder randomString = new StringBuilder();
+		Random random = new Random();
+
+		for (int i = 0; i < length; i++) {
+			int index = random.nextInt(characters.length());
+			randomString.append(characters.charAt(index));
+		}
+
+		return randomString.toString();
+	}
 }

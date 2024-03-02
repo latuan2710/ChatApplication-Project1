@@ -4,7 +4,6 @@ import com.chat.domains.Message;
 import com.chat.domains.MessageHistory;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.adapters.HistoryMessageRepository;
 import com.chat.usecases.adapters.Repository;
 
 public class EditingMessage extends UseCase<EditingMessage.InputValues, EditingMessage.OutputValues> {
@@ -53,12 +52,18 @@ public class EditingMessage extends UseCase<EditingMessage.InputValues, EditingM
 	@Override
 	public OutputValues execute(InputValues input) {
 		Repository<Message> messageRepository = _dataStorage.getMessageRepository();
-		HistoryMessageRepository messageHistoryRepository = _dataStorage.getMessageHistoryRepository();
+		Repository<MessageHistory> messageHistoryRepository = _dataStorage.getMessageHistoryRepository();
+		
+		GettingMessageHistory gettingMessageHistory = new GettingMessageHistory(_dataStorage);
+		GettingMessageHistory.InputValues gettingMessageHistoryInput = new GettingMessageHistory.InputValues(
+				input._messageId);
+		GettingMessageHistory.OutputValues gettingMessageHistoryOutput = gettingMessageHistory
+				.execute(gettingMessageHistoryInput);
 
 		Message message = messageRepository.findById(input._messageId);
 
 		if (message != null && message.getSender().getId().equals(input._senderId)) {
-			MessageHistory history = messageHistoryRepository.findHistoryByMessageId(message.getId());
+			MessageHistory history = gettingMessageHistoryOutput.getMessageHistory();
 
 			if (history == null) {
 				history = new MessageHistory(message.getId());

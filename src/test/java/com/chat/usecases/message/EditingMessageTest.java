@@ -47,8 +47,14 @@ class EditingMessageTest {
 				"After Editing");
 		EditingMessage editingMessage = new EditingMessage(storage);
 		EditingMessage.OutputValues output = editingMessage.execute(inputValues);
-		List<String> historyText = storage.getMessageHistoryRepository().findHistoryByMessageId(message.getId())
-				.getHistoryTexts();
+
+		GettingMessageHistory gettingMessageHistory = new GettingMessageHistory(storage);
+		GettingMessageHistory.InputValues gettingMessageHistoryInput = new GettingMessageHistory.InputValues(
+				message.getId());
+		GettingMessageHistory.OutputValues gettingMessageHistoryOutput = gettingMessageHistory
+				.execute(gettingMessageHistoryInput);
+
+		List<String> historyText = gettingMessageHistoryOutput.getMessageHistory().getHistoryTexts();
 
 		assertEquals("After Editing", output.getNewMessage().getContent());
 		assertEquals("Hello", historyText.get(0));

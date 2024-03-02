@@ -1,20 +1,18 @@
 package com.chat.infrastructure.data;
 
-import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.adapters.GroupRepository;
-import com.chat.usecases.adapters.HistoryMessageRepository;
-import com.chat.usecases.adapters.MessageRepository;
-import com.chat.usecases.adapters.Repository;
+import com.chat.domains.Message;
+import com.chat.domains.MessageHistory;
 import com.chat.domains.User;
 import com.chat.infrastructure.repositories.InMemoryGroupRepository;
-import com.chat.infrastructure.repositories.InMemoryHistoryMessageRepository;
-import com.chat.infrastructure.repositories.InMemoryMessageRepository;
 import com.chat.infrastructure.repositories.InMemoryRepository;
+import com.chat.usecases.adapters.DataStorage;
+import com.chat.usecases.adapters.GroupRepository;
+import com.chat.usecases.adapters.Repository;
 
 public class InMemoryDataStorage implements DataStorage {
 	private Repository<User> _users;
-	private MessageRepository _messages;
-	private HistoryMessageRepository _messageHistoryRepository;
+	private Repository<Message> _messages;
+	private Repository<MessageHistory> _messageHistory;
 	private GroupRepository _groups;
 
 	private static InMemoryDataStorage _storage;
@@ -22,8 +20,8 @@ public class InMemoryDataStorage implements DataStorage {
 	private InMemoryDataStorage() {
 		_users = new InMemoryRepository<User>();
 		_groups = new InMemoryGroupRepository();
-		_messages = new InMemoryMessageRepository();
-		_messageHistoryRepository = new InMemoryHistoryMessageRepository();
+		_messages = new InMemoryRepository<Message>();
+		_messageHistory = new InMemoryRepository<MessageHistory>();
 	}
 
 	public static InMemoryDataStorage getInstance() {
@@ -39,18 +37,18 @@ public class InMemoryDataStorage implements DataStorage {
 	}
 
 	@Override
-	public GroupRepository getGroupRepository() {
-		return _groups;
-	}
-
-	@Override
-	public MessageRepository getMessageRepository() {
+	public Repository<Message> getMessageRepository() {
 		return _messages;
 	}
 
 	@Override
-	public HistoryMessageRepository getMessageHistoryRepository() {
-		return _messageHistoryRepository;
+	public Repository<MessageHistory> getMessageHistoryRepository() {
+		return _messageHistory;
+	}
+
+	@Override
+	public GroupRepository getGroupRepository() {
+		return _groups;
 	}
 
 	@Override
@@ -58,7 +56,7 @@ public class InMemoryDataStorage implements DataStorage {
 		_users.deleteAll();
 		_groups.deleteAll();
 		_messages.deleteAll();
-		_messageHistoryRepository.deleteAll();
+		_messageHistory.deleteAll();
 	}
 
 }
