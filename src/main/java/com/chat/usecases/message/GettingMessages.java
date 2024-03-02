@@ -1,12 +1,17 @@
 package com.chat.usecases.message;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import com.chat.domains.Group;
 import com.chat.domains.Message;
+import com.chat.domains.PrivateGroup;
+import com.chat.domains.PublicGroup;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.adapters.MessageRepository;
+import com.chat.usecases.adapters.Repository;
+import com.chat.usecases.group.GettingUserGroups;
 
 public class GettingMessages extends UseCase<GettingMessages.InputValues, GettingMessages.OutputValues> {
 	private DataStorage _dataStorage;
@@ -48,10 +53,16 @@ public class GettingMessages extends UseCase<GettingMessages.InputValues, Gettin
 
 	@Override
 	public OutputValues execute(InputValues input) {
-		MessageRepository messageMepository = _dataStorage.getMessageRepository();
+		GettingUserGroups.InputValues gettingUserGroupsInput = new GettingUserGroups.InputValues(input._senderId);
+		GettingUserGroups gettingUserGroups = new GettingUserGroups(_dataStorage);
+		GettingUserGroups.OutputValues gettingUserGroupsOutput = gettingUserGroups.execute(gettingUserGroupsInput);
+
+		List<Group> groups = gettingUserGroupsOutput.getGroups();
+
+		Repository<Message> messageMepository = _dataStorage.getMessageRepository();
 
 		Predicate<Message> predicate = m -> (m.getSender().getId().equals(input._senderId))
-				|| m.getReceiver().getId().equals(input._senderId);
+				|| m.getReceiver().getId().equals(input._senderId) || groups.contains(m.getReceiver());
 		List<Message> messages = messageMepository.getAll();
 		List<Message> result = messages.stream().filter(predicate).toList();
 
