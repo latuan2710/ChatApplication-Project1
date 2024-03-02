@@ -2,14 +2,9 @@ package com.chat.usecases.group;
 
 import java.util.List;
 
-import com.chat.domains.PrivateGroup;
 import com.chat.domains.PublicGroup;
-import com.chat.domains.User;
-import com.chat.domains.Group.GroupType;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.adapters.GroupRepository;
-import com.chat.usecases.adapters.Repository;
 
 public class FindingByGroupCode extends UseCase<FindingByGroupCode.InputValues, FindingByGroupCode.OutputValues> {
 	private DataStorage _dataStorage;

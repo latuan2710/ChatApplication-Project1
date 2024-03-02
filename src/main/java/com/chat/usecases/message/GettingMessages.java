@@ -1,13 +1,10 @@
 package com.chat.usecases.message;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import com.chat.domains.Group;
 import com.chat.domains.Message;
-import com.chat.domains.PrivateGroup;
-import com.chat.domains.PublicGroup;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
