@@ -59,7 +59,6 @@ class TimeBoundMessageRetrieverTest {
 		TimeBoundMessageRetriever.OutputValues output = timeBoundMessageRetriever.execute(input);
 
 		List<Message> messages = output.getMessages();
-	
 		assertEquals(3, messages.size());
 
 	}

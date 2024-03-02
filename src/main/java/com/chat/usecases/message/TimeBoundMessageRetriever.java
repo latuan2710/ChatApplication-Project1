@@ -59,8 +59,8 @@ public class TimeBoundMessageRetriever
 		GettingMessages.OutputValues gettingMessageOutput = gettingMessage.execute(gettingMessageInput);
 
 		List<Message> messages = gettingMessageOutput.getMessages();
-		messages = messages.stream().filter(m -> m.getTime().compareTo(input._time) < 0).collect(Collectors.toList());
-		
+		messages = messages.stream().filter(m -> m.getTime().compareTo(input._time) <= 0).collect(Collectors.toList());
+
 		if (messages.isEmpty()) {
 			return new OutputValues(TimeBoundMessageRetrieverResult.Successed, null);
 		}
