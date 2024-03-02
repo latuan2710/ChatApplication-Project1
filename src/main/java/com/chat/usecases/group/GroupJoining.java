@@ -89,7 +89,11 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 	}
 
 	private boolean joinByCode(String inviteCode, User user) {
-		PublicGroup group = _dataStorage.getGroupRepository().findByJoiningCode(inviteCode);
+		FindingByGroupCode findingByGroupCode = new FindingByGroupCode(_dataStorage);
+		FindingByGroupCode.InputValues input = new FindingByGroupCode.InputValues(inviteCode);
+		FindingByGroupCode.OutputValues output = findingByGroupCode.execute(input);
+
+		PublicGroup group = output.getGroup();
 
 		if (group != null) {
 			List<User> members = group.getUsers();

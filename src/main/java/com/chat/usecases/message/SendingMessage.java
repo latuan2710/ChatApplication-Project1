@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.chat.domains.ChatEntity;
 import com.chat.domains.File;
 import com.chat.domains.File.FileType;
+import com.chat.domains.Group;
 import com.chat.domains.Message;
 import com.chat.domains.User;
 import com.chat.infrastructure.services.FileService;
@@ -72,11 +74,18 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 		}
 
 		Repository<User> userRepository = _dataStorage.getUserRepository();
+		Repository<Group> groupRepository = _dataStorage.getGroupRepository();
 		Repository<Message> messageRepository = _dataStorage.getMessageRepository();
 		FileService fileService = new FileService();
 
 		User sender = userRepository.findById(input._senderId);
-		User receiver = userRepository.findById(input._receiverId);
+		ChatEntity receiver = userRepository.findById(input._receiverId);
+		if (receiver == null) {
+			receiver = groupRepository.findById(input._receiverId);
+			if (receiver == null) {
+				return new OutputValues(SendingMessageResult.Failed, "");
+			}
+		}
 
 		List<File> files = new ArrayList<>();
 		for (byte[] content : input._files.keySet()) {
