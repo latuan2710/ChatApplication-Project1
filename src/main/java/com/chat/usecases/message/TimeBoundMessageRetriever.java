@@ -3,6 +3,7 @@ package com.chat.usecases.message;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.chat.domains.Message;
 import com.chat.usecases.UseCase;
@@ -58,13 +59,13 @@ public class TimeBoundMessageRetriever
 		GettingMessages.OutputValues gettingMessageOutput = gettingMessage.execute(gettingMessageInput);
 
 		List<Message> messages = gettingMessageOutput.getMessages();
-		messages = messages.stream().filter(m -> m.getTime().compareTo(input._time) < 0).toList();
+		messages = messages.stream().filter(m -> m.getTime().compareTo(input._time) <= 0).collect(Collectors.toList());
 
 		if (messages.isEmpty()) {
 			return new OutputValues(TimeBoundMessageRetrieverResult.Successed, null);
 		}
 
-		messages.sort((m1, m2) -> m1.getTime().compareTo(m2.getTime()));
+		messages.sort((m1, m2) -> Long.compare(m1.getTime().getTime(), m2.getTime().getTime()));
 
 		if (messages.size() <= input._k) {
 			return new OutputValues(TimeBoundMessageRetrieverResult.Successed, messages);
@@ -81,7 +82,7 @@ public class TimeBoundMessageRetriever
 		for (int i = messages.size() - k; i < messages.size(); i++) {
 			result.add(messages.get(i));
 		}
-
 		return result;
+
 	}
 }
