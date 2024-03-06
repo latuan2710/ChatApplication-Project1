@@ -121,7 +121,7 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 	}
 
 	private boolean joinByAdmin(PrivateGroup inputGroup, User invitor, User user) {
-		if (invitor != null && inputGroup.isAdmin(invitor)) {
+		if (invitor != null && inputGroup.hasAdmin(invitor)) {
 			inputGroup.addMember(user);
 			return true;
 		}

@@ -14,7 +14,7 @@ public class PrivateGroup extends Group {
 		return _admins;
 	}
 
-	public boolean isAdmin(User user) {
+	public boolean hasAdmin(User user) {
 		for (User admin : _admins) {
 			if (user.equals(admin)) {
 				return true;
