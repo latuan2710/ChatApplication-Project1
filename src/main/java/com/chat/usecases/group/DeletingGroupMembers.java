@@ -53,7 +53,7 @@ public class DeletingGroupMembers extends UseCase<DeletingGroupMembers.InputValu
 		User admin = userRepository.findById(input._adminId);
 		User member = userRepository.findById(input._memberId);
 
-		if (group.isAdmin(admin)) {
+		if (group.hasAdmin(admin)) {
 			group.removeMember(member);
 
 			return new OutputValues(DeletingGroupMembersResult.Successed);
