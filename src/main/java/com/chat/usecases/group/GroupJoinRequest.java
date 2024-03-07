@@ -78,7 +78,7 @@ public class GroupJoinRequest extends UseCase<GroupJoinRequest.InputValues, Grou
 	}
 
 	private boolean acceptByAdmin(PrivateGroup inputGroup, User userSendRequestId, User admin) {
-		if (inputGroup.isAdmin(admin)) {
+		if (inputGroup.hasAdmin(admin)) {
 			((PrivateGroup) inputGroup).addMember(userSendRequestId);
 			return true;
 		}
