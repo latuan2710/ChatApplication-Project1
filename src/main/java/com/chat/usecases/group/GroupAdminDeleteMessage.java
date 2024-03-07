@@ -11,11 +11,13 @@ import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.GroupRepository;
 import com.chat.usecases.adapters.Repository;
+import com.chat.usecases.message.DeletingMessage;
 
-public class GroupDeleteMessage extends UseCase<GroupDeleteMessage.InputValues, GroupDeleteMessage.OutputValues> {
+public class GroupAdminDeleteMessage
+		extends UseCase<GroupAdminDeleteMessage.InputValues, GroupAdminDeleteMessage.OutputValues> {
 	private DataStorage _dataStorage;
 
-	public GroupDeleteMessage(DataStorage dataStorage) {
+	public GroupAdminDeleteMessage(DataStorage dataStorage) {
 		super();
 		this._dataStorage = dataStorage;
 	}
@@ -34,18 +36,18 @@ public class GroupDeleteMessage extends UseCase<GroupDeleteMessage.InputValues, 
 	}
 
 	public static class OutputValues {
-		private GroupDeleteMessageResult _result;
+		private GroupAdminDeleteMessageResult _result;
 
-		public OutputValues(GroupDeleteMessageResult result) {
+		public OutputValues(GroupAdminDeleteMessageResult result) {
 			this._result = result;
 		}
 
-		public GroupDeleteMessageResult getResult() {
+		public GroupAdminDeleteMessageResult getResult() {
 			return _result;
 		}
 	}
 
-	public static enum GroupDeleteMessageResult {
+	public static enum GroupAdminDeleteMessageResult {
 		Successed, Failed
 	}
 
@@ -60,30 +62,20 @@ public class GroupDeleteMessage extends UseCase<GroupDeleteMessage.InputValues, 
 		Message message = messageRepository.findById(input._messageId);
 
 		if (group == null || user == null || message == null) {
-			return new OutputValues(GroupDeleteMessageResult.Failed);
+			return new OutputValues(GroupAdminDeleteMessageResult.Failed);
 		}
 
 		boolean isAdminGroup = group instanceof PrivateGroup && ((PrivateGroup) group).hasAdmin(user);
-		boolean isSender = group instanceof PublicGroup && message.getSender().equals(user);
 
-//		if (isAdminGroup || isSender) {
-//			DeletingMessage.InputValues deletingMessageInput = new DeletingMessage.InputValues(
-//					message.getSender().getId(), message.getId());
-//			DeletingMessage deletingMessage = new DeletingMessage(_dataStorage);
-//			deletingMessage.execute(deletingMessageInput);
-//			return new OutputValues(GroupDeleteMessageResult.Successed);
-//		}
-
-		if (isAdminGroup || isSender) {
-			FileService fileService = new FileService();
-			for (File file : message.getAttachments()) {
-				fileService.deleteFile(file.getPath());
-			}
-			messageRepository.deleteById(input._messageId);
-			return new OutputValues(GroupDeleteMessageResult.Successed);
+		if (isAdminGroup) {
+			DeletingMessage.InputValues deletingMessageInput = new DeletingMessage.InputValues(
+					message.getSender().getId(), message.getId());
+			DeletingMessage deletingMessage = new DeletingMessage(_dataStorage);
+			deletingMessage.execute(deletingMessageInput);
+			return new OutputValues(GroupAdminDeleteMessageResult.Successed);
 		}
 
-		return new OutputValues(GroupDeleteMessageResult.Failed);
+		return new OutputValues(GroupAdminDeleteMessageResult.Failed);
 
 	}
 }

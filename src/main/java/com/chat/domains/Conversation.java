@@ -4,27 +4,33 @@ import java.util.List;
 
 public class Conversation extends ChatEntity {
 	private List<Message> _messages;
-	private List<User> _participants;
+	private List<ChatEntity> _participants;
 
-	public Conversation(List<Message> messages, List<User> participants) {
+	public Conversation(List<Message> messages, List<ChatEntity> participants) {
 		super();
 		this._messages = messages;
 		this._participants = participants;
 	}
 
-	public List<Message> get_messages() {
+	public List<Message> getMessages() {
 		return _messages;
 	}
 
-	public void set_messages(List<Message> _messages) {
-		this._messages = _messages;
+	public void setMessages(List<Message> messages) {
+		this._messages = messages;
 	}
 
-	public List<User> getParticipants() {
+	public void addMessage(Message message) {
+		if (!_messages.contains(message)) {
+			this._messages.add(message);
+		}
+	}
+
+	public List<ChatEntity> getParticipants() {
 		return _participants;
 	}
 
-	public void setParticipants(List<User> participants) {
+	public void setParticipants(List<ChatEntity> participants) {
 		this._participants = participants;
 	}
 }
