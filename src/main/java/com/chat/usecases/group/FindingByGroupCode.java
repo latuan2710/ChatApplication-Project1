@@ -40,7 +40,7 @@ public class FindingByGroupCode extends UseCase<FindingByGroupCode.InputValues, 
 		}
 	}
 
-	public static enum FindingByGroupCodeResult {
+	public enum FindingByGroupCodeResult {
 		Successed, Failed
 	}
 

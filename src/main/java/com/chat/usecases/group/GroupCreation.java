@@ -56,7 +56,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 
 	}
 
-	public static enum GroupCreationResult {
+	public enum GroupCreationResult {
 		Successed, Failed
 	}
 

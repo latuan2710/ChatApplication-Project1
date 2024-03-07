@@ -40,7 +40,7 @@ public class DeletingGroupMembers extends UseCase<DeletingGroupMembers.InputValu
 		}
 	}
 
-	public static enum DeletingGroupMembersResult {
+	public enum DeletingGroupMembersResult {
 		Successed, Failed
 	}
 

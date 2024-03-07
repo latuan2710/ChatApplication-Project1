@@ -44,7 +44,7 @@ public class DeletingMessage extends UseCase<DeletingMessage.InputValues, Deleti
 		}
 	}
 
-	public static enum DeletingMessageResult {
+	public enum DeletingMessageResult {
 		Successed, Failed
 	}
 

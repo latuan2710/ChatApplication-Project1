@@ -63,7 +63,7 @@ public class UserRegistration extends UseCase<UserRegistration.InputValues, User
 		}
 	}
 
-	public static enum RegisterResult {
+	public enum RegisterResult {
 		Successed, Failed
 	}
 }

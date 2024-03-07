@@ -45,7 +45,7 @@ public class EditingMessage extends UseCase<EditingMessage.InputValues, EditingM
 
 	}
 
-	public static enum EditingMessageResult {
+	public enum EditingMessageResult {
 		Successed, Failed
 	}
 

@@ -49,7 +49,7 @@ public class GroupJoinRequest extends UseCase<GroupJoinRequest.InputValues, Grou
 
 	}
 
-	public static enum GroupJoinRequestResult {
+	public enum GroupJoinRequestResult {
 		Successed, Failed
 	}
 

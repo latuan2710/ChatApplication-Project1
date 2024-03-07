@@ -49,7 +49,7 @@ public class GettingKLatestMessagesExcludingMRecent extends UseCase<GettingKLate
 		}
 	}
 
-	public static enum GettingKLatestMessagesExcludingMRecentResult {
+	public enum GettingKLatestMessagesExcludingMRecentResult {
 		Successed, Failed
 	}
 

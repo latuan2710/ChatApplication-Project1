@@ -57,7 +57,7 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 
 	}
 
-	public static enum GroupJoiningResult {
+	public enum GroupJoiningResult {
 		Successed, Failed
 	}
 

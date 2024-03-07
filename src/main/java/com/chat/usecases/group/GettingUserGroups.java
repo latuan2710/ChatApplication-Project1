@@ -50,7 +50,7 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 		}
 	}
 
-	public static enum GettingGroupResult {
+	public enum GettingGroupResult {
 		Successed, Failed
 	}
 

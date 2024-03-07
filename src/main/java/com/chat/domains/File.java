@@ -39,7 +39,7 @@ public class File extends ChatEntity {
 
 	}
 
-	public static enum FileType {
+	public enum FileType {
 		Image, Video, Audio
 	}
 }

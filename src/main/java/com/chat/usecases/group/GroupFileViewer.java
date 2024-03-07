@@ -48,7 +48,7 @@ public class GroupFileViewer extends UseCase<GroupFileViewer.InputValues, GroupF
 
 	}
 
-	public static enum GettingAllFileResult {
+	public enum GettingAllFileResult {
 		Successed, Failed
 	}
 

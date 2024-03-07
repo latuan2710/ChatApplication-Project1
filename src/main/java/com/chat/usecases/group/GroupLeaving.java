@@ -36,7 +36,7 @@ public class GroupLeaving extends UseCase<GroupLeaving.InputValues, GroupLeaving
 		}
 	}
 
-	public static enum leavingGroupResult {
+	public enum leavingGroupResult {
 		Successed, Failed
 	}
 

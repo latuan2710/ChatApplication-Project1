@@ -40,7 +40,7 @@ public class GettingMessageHistory
 		}
 	}
 
-	public static enum GettingMessageHistoryResult {
+	public enum GettingMessageHistoryResult {
 		Successed, Failed
 	}
 

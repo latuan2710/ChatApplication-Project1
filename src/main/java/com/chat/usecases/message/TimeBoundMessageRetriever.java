@@ -48,7 +48,7 @@ public class TimeBoundMessageRetriever
 		}
 	}
 
-	public static enum TimeBoundMessageRetrieverResult {
+	public enum TimeBoundMessageRetrieverResult {
 		Successed, Failed
 	}
 

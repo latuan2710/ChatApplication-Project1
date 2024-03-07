@@ -45,7 +45,7 @@ public class GroupDeleteMessage extends UseCase<GroupDeleteMessage.InputValues, 
 		}
 	}
 
-	public static enum GroupDeleteMessageResult {
+	public enum GroupDeleteMessageResult {
 		Successed, Failed
 	}
 

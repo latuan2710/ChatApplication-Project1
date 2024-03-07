@@ -44,7 +44,7 @@ public class GettingMessages extends UseCase<GettingMessages.InputValues, Gettin
 		}
 	}
 
-	public static enum GettingMessagesResult {
+	public enum GettingMessagesResult {
 		Successed, Failed
 	}
 

@@ -63,7 +63,7 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 		}
 	}
 
-	public static enum SendingMessageResult {
+	public enum SendingMessageResult {
 		Successed, Failed
 	}
 

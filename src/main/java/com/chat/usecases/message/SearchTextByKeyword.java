@@ -47,7 +47,7 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 		}
 	}
 
-	public static enum SearchTextByKeywordTestResult {
+	public enum SearchTextByKeywordTestResult {
 		Successed, Failed
 	}
 

@@ -44,7 +44,7 @@ public class UserLogin extends UseCase<UserLogin.InputValues, UserLogin.OutputVa
 		}
 	}
 
-	public static enum LoginResult {
+	public enum LoginResult {
 		Successed, Failed
 	}
 

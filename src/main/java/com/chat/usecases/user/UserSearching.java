@@ -48,7 +48,7 @@ public class UserSearching extends UseCase<UserSearching.InputValues, UserSearch
 
 	}
 
-	public static enum SearchingResult {
+	public enum SearchingResult {
 		Successed, Failed
 	}
 
