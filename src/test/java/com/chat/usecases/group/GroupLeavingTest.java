@@ -18,7 +18,8 @@ class GroupLeavingTest {
 	@BeforeEach
 	public void setUp() {
 		User user = new User("dasdas", "", "", "", false, null);
-		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user.getId(), GroupType.Public);
+		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user.getId(), GroupType.Public,
+				"public");
 
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		storage.getUserRepository().add(user);
@@ -46,9 +47,9 @@ class GroupLeavingTest {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = new User("dasdas", "", "", "", false, null);
 		Group group = storage.getGroupRepository().getAll().get(0);
-		
+
 		GroupLeaving groupLeaving = new GroupLeaving(storage);
-		GroupLeaving.InputValues input = new GroupLeaving.InputValues(user.getId(),  group.getId());
+		GroupLeaving.InputValues input = new GroupLeaving.InputValues(user.getId(), group.getId());
 		GroupLeaving.OutputValues output = groupLeaving.execute(input);
 
 		assertEquals(leavingGroupResult.Failed, output.getResult());

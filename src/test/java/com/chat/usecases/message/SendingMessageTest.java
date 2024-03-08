@@ -70,7 +70,7 @@ class SendingMessageTest {
 		User sender = new User("Tuan", "", "", "", false, null);
 		storage.getUserRepository().add(sender);
 
-		GroupCreation.InputValues in = new GroupCreation.InputValues(sender.getId(), GroupType.Private);
+		GroupCreation.InputValues in = new GroupCreation.InputValues(sender.getId(), GroupType.Private, "private");
 		GroupCreation pb = new GroupCreation(storage);
 		GroupCreation.OutputValues out = pb.execute(in);
 
