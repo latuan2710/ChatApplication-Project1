@@ -31,7 +31,7 @@ class DeletingGroupMembersTest {
 
 		GroupCreation groupCreation = new GroupCreation(storage);
 		GroupCreation.OutputValues output = groupCreation
-				.execute(new GroupCreation.InputValues(admin.getId(), GroupType.Private));
+				.execute(new GroupCreation.InputValues(admin.getId(), GroupType.Private,"private"));
 
 		PrivateGroup group = (PrivateGroup) output.getGroup();
 

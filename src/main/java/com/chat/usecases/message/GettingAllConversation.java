@@ -1,10 +1,12 @@
 package com.chat.usecases.message;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.chat.domains.ChatEntity;
 import com.chat.domains.Conversation;
+import com.chat.domains.Group;
 import com.chat.domains.Message;
 import com.chat.domains.User;
 import com.chat.usecases.UseCase;
@@ -19,10 +21,10 @@ public class GettingAllConversation
 	}
 
 	public static class InputValues {
-		private String _senderId;
+		private String _userId;
 
-		public InputValues(String senderId) {
-			this._senderId = senderId;
+		public InputValues(String userId) {
+			this._userId = userId;
 		}
 
 	}
@@ -54,7 +56,7 @@ public class GettingAllConversation
 	public OutputValues execute(InputValues input) {
 		HashMap<String, Conversation> conversations = new HashMap<>();
 
-		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(input._senderId);
+		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(input._userId);
 		GettingMessages gettingAllMessages = new GettingMessages(_dataStorage);
 		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages.execute(gettingAllMessagesInput);
 
@@ -71,9 +73,14 @@ public class GettingAllConversation
 			String receiverName = "";
 
 			if (receiver instanceof User) {
-				receiverName = ((User) receiver).getFullName();
-			} else {
-
+				if (receiver.getId().equals(input._userId)) {
+					receiverName = sender.getFullName();
+					receiverId = sender.getId();
+				} else {
+					receiverName = ((User) receiver).getFullName();
+				}
+			} else if (receiver instanceof Group) {
+				receiverName = ((Group) receiver).getName();
 			}
 
 			String conversionName = receiverId + receiverName;
@@ -82,7 +89,8 @@ public class GettingAllConversation
 				conversation.addMessage(message);
 				conversations.put(conversionName, conversation);
 			} else {
-				conversations.put(conversionName, new Conversation(List.of(message), List.of(sender, receiver)));
+				conversations.put(conversionName,
+						new Conversation(new ArrayList<>(List.of(message)), List.of(sender, receiver)));
 			}
 		}
 

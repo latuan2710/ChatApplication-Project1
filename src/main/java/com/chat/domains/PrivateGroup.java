@@ -5,8 +5,8 @@ import java.util.List;
 public class PrivateGroup extends Group {
 	private List<User> _admins;
 
-	public PrivateGroup(List<User> users, GroupType type, List<User> admins) {
-		super(users, type);
+	public PrivateGroup(List<User> users, GroupType type, String name, List<User> admins) {
+		super(users, type, name);
 		this._admins = admins;
 	}
 

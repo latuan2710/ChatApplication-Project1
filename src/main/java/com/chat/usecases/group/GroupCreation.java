@@ -24,10 +24,12 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 	public static class InputValues {
 		private String _userId;
 		private GroupType _type;
+		private String _groupName;
 
-		public InputValues(String userId, GroupType type) {
+		public InputValues(String userId, GroupType type, String groupName) {
 			this._userId = userId;
 			this._type = type;
+			this._groupName = groupName;
 		}
 	}
 
@@ -74,27 +76,27 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 		users.add(user);
 
 		if (input._type == GroupType.Public) {
-			group = createPublicGroup(repository, users);
+			group = createPublicGroup(repository, users, input._groupName);
 		} else {
-			group = createPrivateGroup(repository, new ArrayList<>(), user);
+			group = createPrivateGroup(repository, new ArrayList<>(), user, input._groupName);
 		}
 
 		return new OutputValues(GroupCreationResult.Successed, "", group);
 	}
 
-	private Group createPrivateGroup(GroupRepository repository, List<User> users, User user) {
+	private Group createPrivateGroup(GroupRepository repository, List<User> users, User user, String groupName) {
 		List<User> admins = new ArrayList<>();
 		admins.add(user);
 
-		PrivateGroup group = new PrivateGroup(users, GroupType.Private, admins);
+		PrivateGroup group = new PrivateGroup(users, GroupType.Private, groupName, admins);
 
 		repository.add(group);
 		return group;
 	}
 
-	private Group createPublicGroup(GroupRepository repository, List<User> users) {
+	private Group createPublicGroup(GroupRepository repository, List<User> users, String groupName) {
 		String joiningCode = this.generateJoiningCode(repository);
-		PublicGroup group = new PublicGroup(users, GroupType.Public, joiningCode);
+		PublicGroup group = new PublicGroup(users, GroupType.Public, groupName, joiningCode);
 
 		repository.add(group);
 		return group;

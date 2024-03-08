@@ -31,7 +31,7 @@ public class GroupFileViewerTest {
 		storage.getUserRepository().add(sender);
 		storage.getUserRepository().add(member);
 
-		GroupCreation.InputValues in = new GroupCreation.InputValues(sender.getId(), GroupType.Private);
+		GroupCreation.InputValues in = new GroupCreation.InputValues(sender.getId(), GroupType.Private, "private");
 		GroupCreation groupCreation = new GroupCreation(storage);
 		GroupCreation.OutputValues out = groupCreation.execute(in);
 
@@ -75,7 +75,7 @@ public class GroupFileViewerTest {
 
 		assertEquals(6, output.getFiles().size());
 	}
-	
+
 	@Test
 	void testGetByMember() {
 		DataStorage storage = InMemoryDataStorage.getInstance();

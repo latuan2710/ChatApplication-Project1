@@ -33,8 +33,8 @@ class GroupAdminDeleteMessageTest {
 		storage.getUserRepository().add(member);
 
 		GroupCreation groupCreation = new GroupCreation(storage);
-		Group privateGroup = groupCreation.execute(new GroupCreation.InputValues(sender.getId(), GroupType.Private))
-				.getGroup();
+		Group privateGroup = groupCreation
+				.execute(new GroupCreation.InputValues(sender.getId(), GroupType.Private, "private")).getGroup();
 
 		GroupJoining groupJoining = new GroupJoining(storage);
 		groupJoining.execute(new GroupJoining.InputValues(member.getId(), sender.getId(), privateGroup.getId()));

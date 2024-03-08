@@ -24,8 +24,10 @@ class GroupJoiningTest {
 
 		storage.getUserRepository().add(user);
 
-		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user.getId(), GroupType.Public);
-		GroupCreation.InputValues inputPrivateGroup = new GroupCreation.InputValues(user.getId(), GroupType.Private);
+		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user.getId(), GroupType.Public,
+				"public");
+		GroupCreation.InputValues inputPrivateGroup = new GroupCreation.InputValues(user.getId(), GroupType.Private,
+				"private");
 
 		groupCreation.execute(inputPublicGroup);
 		groupCreation.execute(inputPrivateGroup);
