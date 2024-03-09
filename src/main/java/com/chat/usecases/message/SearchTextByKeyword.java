@@ -30,15 +30,15 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 	}
 
 	public static class OutputValues {
-		private SearchTextByKeywordTestResult _result;
+		private SearchTextByKeywordResult _result;
 		private List<Message> _messages;
 
-		public OutputValues(SearchTextByKeywordTestResult result, List<Message> messages) {
+		public OutputValues(SearchTextByKeywordResult result, List<Message> messages) {
 			_messages = messages;
 			_result = result;
 		}
 
-		public SearchTextByKeywordTestResult getResult() {
+		public SearchTextByKeywordResult getResult() {
 			return _result;
 		}
 
@@ -47,7 +47,7 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 		}
 	}
 
-	public enum SearchTextByKeywordTestResult {
+	public enum SearchTextByKeywordResult {
 		Successed, Failed
 	}
 
@@ -71,7 +71,7 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 
 		messages = searchTextByKeyword(input._keyword, messages);
 
-		return new OutputValues(SearchTextByKeywordTestResult.Successed, messages);
+		return new OutputValues(SearchTextByKeywordResult.Successed, messages);
 	}
 
 	private List<Message> searchTextByKeyword(String keyword, List<Message> messages) {
