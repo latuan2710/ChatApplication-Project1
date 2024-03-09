@@ -64,7 +64,7 @@ public class GroupFileViewerTest {
 	}
 
 	@Test
-	void testGetBySender() {
+	public void testGetBySender() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User sender = storage.getUserRepository().getAll().get(0);
 		Group group = storage.getGroupRepository().getAll().get(0);
@@ -77,7 +77,7 @@ public class GroupFileViewerTest {
 	}
 
 	@Test
-	void testGetByMember() {
+	public void testGetByMember() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User member = storage.getUserRepository().getAll().get(1);
 		Group group = storage.getGroupRepository().getAll().get(0);

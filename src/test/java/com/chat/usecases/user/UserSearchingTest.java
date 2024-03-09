@@ -25,7 +25,7 @@ class UserSearchingTest {
 	}
 
 	@Test
-	void searchSuccessfully() {
+	public void searchSuccessfully() {
 		UserSearching.InputValues input = new UserSearching.InputValues("sda");
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
@@ -37,7 +37,7 @@ class UserSearchingTest {
 	}
 
 	@Test
-	void searchFailed() {
+	public void searchFailed() {
 		UserSearching.InputValues input = new UserSearching.InputValues("sdak");
 		DataStorage storage = InMemoryDataStorage.getInstance();
 

@@ -42,7 +42,7 @@ class SendingMessageTest {
 	}
 
 	@Test
-	void testSendToUser() {
+	public void testSendToUser() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User sender = new User("Tuan", "", "", "", false, null);
@@ -64,7 +64,7 @@ class SendingMessageTest {
 	}
 
 	@Test
-	void testSendToGroup() {
+	public void testSendToGroup() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User sender = new User("Tuan", "", "", "", false, null);

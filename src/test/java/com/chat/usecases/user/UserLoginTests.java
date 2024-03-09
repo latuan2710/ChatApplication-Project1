@@ -21,7 +21,7 @@ class UserLoginTests {
 	}
 
 	@Test
-	void loginSuccessfully() {
+	public void loginSuccessfully() {
 		UserLogin.InputValues input = new UserLogin.InputValues("ntn", "123");
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
@@ -32,7 +32,7 @@ class UserLoginTests {
 	}
 
 	@Test
-	void loginFailed() {
+	public void loginFailed() {
 		UserLogin.InputValues input = new UserLogin.InputValues("ntn", "1234");
 		DataStorage storage = InMemoryDataStorage.getInstance();
 

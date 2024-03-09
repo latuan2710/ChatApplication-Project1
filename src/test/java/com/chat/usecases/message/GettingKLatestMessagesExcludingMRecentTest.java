@@ -43,7 +43,7 @@ class GettingKLatestMessagesExcludingMRecentTest {
 	}
 
 	@Test
-	void testGetKLatestMessagesExcludingMRecent() {
+	public void testGetKLatestMessagesExcludingMRecent() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Repository<User> userRepository = storage.getUserRepository();
 		User sender = userRepository.getAll().get(0);

@@ -40,7 +40,7 @@ class GroupJoiningTest {
 	}
 
 	@Test
-	void testJoiningPublicGroupByInvitationSuccessfully() {
+	public void testJoiningPublicGroupByInvitationSuccessfully() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = new User("dasdas", "", "", "", false, null);
@@ -55,7 +55,7 @@ class GroupJoiningTest {
 	}
 
 	@Test
-	void testJoiningPublicGroupByInvitationFailed() {
+	public void testJoiningPublicGroupByInvitationFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = new User("dasdas", "", "", "", false, null);
@@ -70,7 +70,7 @@ class GroupJoiningTest {
 	}
 
 	@Test
-	void testJoiningPublicGroupByCodeSuccessfully() {
+	public void testJoiningPublicGroupByCodeSuccessfully() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = new User("dasdas", "", "", "", false, null);
@@ -84,7 +84,7 @@ class GroupJoiningTest {
 	}
 
 	@Test
-	void testJoiningPublicGroupByCodeFailed() {
+	public void testJoiningPublicGroupByCodeFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = new User("dasdas", "", "", "", false, null);
@@ -97,7 +97,7 @@ class GroupJoiningTest {
 	}
 
 	@Test
-	void testJoiningPrivateGroupByAdminSuccessfully() {
+	public void testJoiningPrivateGroupByAdminSuccessfully() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = new User("dasdas", "", "", "", false, null);
@@ -112,7 +112,7 @@ class GroupJoiningTest {
 	}
 
 	@Test
-	void testJoiningPrivateGroupByAdminFailed() {
+	public void testJoiningPrivateGroupByAdminFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = new User("dasdas", "", "", "", false, null);

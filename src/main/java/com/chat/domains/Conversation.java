@@ -3,13 +3,23 @@ package com.chat.domains;
 import java.util.List;
 
 public class Conversation extends ChatEntity {
+	private String _name;
 	private List<Message> _messages;
 	private List<ChatEntity> _participants;
 
-	public Conversation(List<Message> messages, List<ChatEntity> participants) {
+	public Conversation(String name, List<Message> messages, List<ChatEntity> participants) {
 		super();
+		this._name = name;
 		this._messages = messages;
 		this._participants = participants;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		this._name = name;
 	}
 
 	public List<Message> getMessages() {

@@ -41,7 +41,7 @@ class SearchTextByKeywordTest {
 	}
 
 	@Test
-	void searchTextByKeywordTest() {
+	public void searchTextByKeywordTest() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Repository<User> userRepository = storage.getUserRepository();
 		User sender = userRepository.getAll().get(0);

@@ -30,7 +30,7 @@ class GroupLeavingTest {
 	}
 
 	@Test
-	void successLeavingGroup() {
+	public void successLeavingGroup() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = storage.getUserRepository().getFirst(x -> x.getUsername().equals("dasdas"));
 		Group group = storage.getGroupRepository().getAll().get(0);
@@ -43,7 +43,7 @@ class GroupLeavingTest {
 	}
 
 	@Test
-	void removeUserNotInGroup() {
+	public void removeUserNotInGroup() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = new User("dasdas", "", "", "", false, null);
 		Group group = storage.getGroupRepository().getAll().get(0);
