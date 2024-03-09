@@ -40,7 +40,7 @@ class DeletingMessageTest {
 	}
 
 	@Test
-	void testDeleteMessageSuccess() {
+	public void testDeleteMessageSuccess() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Message message = storage.getMessageRepository().getAll().get(0);
 		User sender = storage.getUserRepository().getAll().get(0);
@@ -53,7 +53,7 @@ class DeletingMessageTest {
 	}
 	
 	@Test
-	void testDeleteMessageFail() {
+	public void testDeleteMessageFail() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Message message = storage.getMessageRepository().getAll().get(0);
 		User sender = new User("Tuan", "", "", "", false, null);

@@ -48,7 +48,7 @@ class DeletingGroupMembersTest {
 	}
 
 	@Test
-	void testRemoveMemberSuccessfully() {
+	public void testRemoveMemberSuccessfully() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Repository<User> userRepository = storage.getUserRepository();
 		GroupRepository groupRepository = storage.getGroupRepository();
@@ -67,7 +67,7 @@ class DeletingGroupMembersTest {
 	}
 
 	@Test
-	void testRemoveMemberFailed() {
+	public void testRemoveMemberFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Repository<User> userRepository = storage.getUserRepository();
 		GroupRepository groupRepository = storage.getGroupRepository();

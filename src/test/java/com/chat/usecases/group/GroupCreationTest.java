@@ -22,7 +22,7 @@ class GroupCreationTest {
 	}
 
 	@Test
-	void testPrivateGroupCreation() {
+	public void testPrivateGroupCreation() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = storage.getUserRepository().getAll().get(0);
 		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Private, "private");
@@ -35,7 +35,7 @@ class GroupCreationTest {
 	}
 
 	@Test
-	void testPublicGroupCreation() {
+	public void testPublicGroupCreation() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = storage.getUserRepository().getAll().get(0);
 		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Public, "public");

@@ -37,7 +37,7 @@ class EditingMessageTest {
 	}
 
 	@Test
-	void testEditMessageSuccessfully() {
+	public void testEditMessageSuccessfully() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User sender = storage.getUserRepository().getAll().get(0);
@@ -61,7 +61,7 @@ class EditingMessageTest {
 	}
 
 	@Test
-	void testEditMessageFailed() {
+	public void testEditMessageFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User receiver = storage.getUserRepository().getAll().get(1);
