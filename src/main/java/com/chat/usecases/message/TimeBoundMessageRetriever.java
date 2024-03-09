@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import com.chat.domains.Message;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
+import com.chat.usecases.message.GettingMessages.GettingMessagesResult;
+import com.chat.usecases.message.SearchTextByKeyword.OutputValues;
+import com.chat.usecases.message.SearchTextByKeyword.SearchTextByKeywordResult;
 
 public class TimeBoundMessageRetriever
 		extends UseCase<TimeBoundMessageRetriever.InputValues, TimeBoundMessageRetriever.OutputValues> {
@@ -58,6 +61,10 @@ public class TimeBoundMessageRetriever
 		GettingMessages gettingMessage = new GettingMessages(_dataStorage);
 		GettingMessages.OutputValues gettingMessageOutput = gettingMessage.execute(gettingMessageInput);
 
+		if (gettingMessageOutput.getResult() == GettingMessagesResult.Failed) {
+			return new OutputValues(TimeBoundMessageRetrieverResult.Failed, null);
+		}
+
 		List<Message> messages = gettingMessageOutput.getMessages();
 		messages = messages.stream().filter(m -> m.getTime().compareTo(input._time) <= 0).collect(Collectors.toList());
 
@@ -72,7 +79,9 @@ public class TimeBoundMessageRetriever
 		}
 
 		messages = this.getKLastestMessage(input._k, messages);
-
+		if (messages.isEmpty()) {
+			return new OutputValues(TimeBoundMessageRetrieverResult.Failed, null);
+		}
 		return new OutputValues(TimeBoundMessageRetrieverResult.Successed, messages);
 	}
 

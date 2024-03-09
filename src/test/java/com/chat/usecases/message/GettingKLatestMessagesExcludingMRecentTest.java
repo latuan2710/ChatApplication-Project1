@@ -15,6 +15,7 @@ import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
+import com.chat.usecases.message.GettingKLatestMessagesExcludingMRecent.GettingKLatestMessagesExcludingMRecentResult;
 
 class GettingKLatestMessagesExcludingMRecentTest {
 
@@ -43,20 +44,36 @@ class GettingKLatestMessagesExcludingMRecentTest {
 	}
 
 	@Test
-	public void testGetKLatestMessagesExcludingMRecent() {
+	public void testGetKLatestMessagesExcludingMRecentSuccessfully() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Repository<User> userRepository = storage.getUserRepository();
 		User sender = userRepository.getAll().get(0);
 		User receiver = userRepository.getAll().get(1);
 
-		GettingKLatestMessagesExcludingMRecent.InputValues input = new GettingKLatestMessagesExcludingMRecent.InputValues(3, 0, sender.getId(),
-				receiver.getId());
-		GettingKLatestMessagesExcludingMRecent gettingConversation = new GettingKLatestMessagesExcludingMRecent(storage);
+		GettingKLatestMessagesExcludingMRecent.InputValues input = new GettingKLatestMessagesExcludingMRecent.InputValues(
+				3, 0, sender.getId(), receiver.getId());
+		GettingKLatestMessagesExcludingMRecent gettingConversation = new GettingKLatestMessagesExcludingMRecent(
+				storage);
 		GettingKLatestMessagesExcludingMRecent.OutputValues output = gettingConversation.execute(input);
 
-		List<Message> messages = output.getmessages();
+		assertEquals(GettingKLatestMessagesExcludingMRecentResult.Successed, output.getResult());
 
-		assertEquals(3, messages.size());
+	}
+
+	@Test
+	public void testGetKLatestMessagesExcludingMRecentFail() {
+		DataStorage storage = InMemoryDataStorage.getInstance();
+		
+		User sender = new User("Tuan", "", "", "", false, null);
+		User receiver = new User("Nhan", "", "", "", false, null);
+
+		GettingKLatestMessagesExcludingMRecent.InputValues input = new GettingKLatestMessagesExcludingMRecent.InputValues(
+				4, 0, sender.getId(), receiver.getId());
+		GettingKLatestMessagesExcludingMRecent gettingConversation = new GettingKLatestMessagesExcludingMRecent(
+				storage);
+		GettingKLatestMessagesExcludingMRecent.OutputValues output = gettingConversation.execute(input);
+
+		assertEquals(GettingKLatestMessagesExcludingMRecentResult.Failed, output.getResult());
 
 	}
 }

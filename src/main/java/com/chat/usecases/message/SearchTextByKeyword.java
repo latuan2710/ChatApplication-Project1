@@ -2,12 +2,14 @@ package com.chat.usecases.message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.chat.domains.Message;
 import com.chat.domains.User;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
+import com.chat.usecases.message.GettingMessages.GettingMessagesResult;
 
 public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues, SearchTextByKeyword.OutputValues> {
 	DataStorage _dataStorage;
@@ -58,18 +60,23 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 		User sender = userRepository.findById(input._senderId);
 		User receiver = userRepository.findById(input._receiverId);
 
-		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(
-				input._senderId);
+		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(input._senderId);
 		GettingMessages gettingAllMessages = new GettingMessages(_dataStorage);
-		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages
-				.execute(gettingAllMessagesInput);
-
+		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages.execute(gettingAllMessagesInput);
+		
+		if (gettingAllMessagesOutput.getResult() == GettingMessagesResult.Failed) {
+			return new OutputValues(SearchTextByKeywordResult.Failed, null);
+		}
 		List<Message> messages = gettingAllMessagesOutput.getMessages();
+
 		messages = messages.stream().filter(m -> m.getSender().equals(sender) && m.getReceiver().equals(receiver))
-				.toList();
+				.collect(Collectors.toList());
 //		messages.sort((m1, m2) -> m1.getTimestamp().compareTo(m2.getTimestamp()));
 
 		messages = searchTextByKeyword(input._keyword, messages);
+		if(messages.isEmpty()) {
+			return new OutputValues(SearchTextByKeywordResult.Failed, null);
+		}
 
 		return new OutputValues(SearchTextByKeywordResult.Successed, messages);
 	}

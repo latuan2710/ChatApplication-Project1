@@ -16,6 +16,7 @@ import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
+import com.chat.usecases.message.TimeBoundMessageRetriever.TimeBoundMessageRetrieverResult;
 
 class TimeBoundMessageRetrieverTest {
 
@@ -44,11 +45,10 @@ class TimeBoundMessageRetrieverTest {
 	}
 
 	@Test
-	void testTimeBoundMessageRetriever() {
+	public void testTimeBoundMessageRetrieverSuccessfully() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		Repository<User> userRepository = storage.getUserRepository();
 		User sender = userRepository.getAll().get(0);
-//		User receiver = userRepository.getAll().get(1);
 
 		Date time = new Date();
 
@@ -58,8 +58,25 @@ class TimeBoundMessageRetrieverTest {
 		TimeBoundMessageRetriever timeBoundMessageRetriever = new TimeBoundMessageRetriever(storage);
 		TimeBoundMessageRetriever.OutputValues output = timeBoundMessageRetriever.execute(input);
 
-		List<Message> messages = output.getMessages();
-		assertEquals(3, messages.size());
+		assertEquals(TimeBoundMessageRetrieverResult.Successed, output.getResult());
+
+	}
+	
+	@Test
+	public void testTimeBoundMessageRetrieverFailed() {
+		DataStorage storage = InMemoryDataStorage.getInstance();
+	
+		User sender = new User("Tuan", "", "", "", false, null);
+		User receiver = new User("Nhan", "", "", "", false, null);
+		
+		Date time = new Date();
+
+		TimeBoundMessageRetriever.InputValues input = new TimeBoundMessageRetriever.InputValues(sender.getId(), 3,
+				time);
+
+		TimeBoundMessageRetriever timeBoundMessageRetriever = new TimeBoundMessageRetriever(storage);
+		TimeBoundMessageRetriever.OutputValues output = timeBoundMessageRetriever.execute(input);
+		assertEquals(TimeBoundMessageRetrieverResult.Failed, output.getResult());
 
 	}
 }

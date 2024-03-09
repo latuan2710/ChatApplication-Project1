@@ -63,8 +63,10 @@ public class GettingMessages extends UseCase<GettingMessages.InputValues, Gettin
 		List<Message> messages = messageMepository.getAll();
 		List<Message> result = messages.stream().filter(predicate).toList();
 
-		result = result.isEmpty() ? null : result;
-
+		if(result==null||result.isEmpty()) {
+			return new OutputValues(GettingMessagesResult.Failed, null);
+		}
+		
 		return new OutputValues(GettingMessagesResult.Successed, result);
 	}
 }

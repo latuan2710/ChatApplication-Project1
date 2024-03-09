@@ -48,7 +48,7 @@ public class GettingAllConversation
 
 	}
 
-	public static enum GettingAllConversationResult {
+	public enum GettingAllConversationResult {
 		Successed, Failed
 	}
 
