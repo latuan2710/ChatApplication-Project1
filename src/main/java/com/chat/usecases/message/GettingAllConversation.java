@@ -90,7 +90,7 @@ public class GettingAllConversation
 				conversations.put(conversionName, conversation);
 			} else {
 				conversations.put(conversionName,
-						new Conversation(new ArrayList<>(List.of(message)), List.of(sender, receiver)));
+						new Conversation(conversionName, new ArrayList<>(List.of(message)), List.of(sender, receiver)));
 			}
 		}
 
