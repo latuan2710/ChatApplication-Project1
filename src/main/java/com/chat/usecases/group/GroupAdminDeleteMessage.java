@@ -1,17 +1,15 @@
 package com.chat.usecases.group;
 
-import com.chat.domains.File;
 import com.chat.domains.Group;
 import com.chat.domains.Message;
 import com.chat.domains.PrivateGroup;
-import com.chat.domains.PublicGroup;
 import com.chat.domains.User;
-import com.chat.infrastructure.services.FileService;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.GroupRepository;
 import com.chat.usecases.adapters.Repository;
 import com.chat.usecases.message.DeletingMessage;
+import com.chat.usecases.message.DeletingMessage.DeletingMessageResult;
 
 public class GroupAdminDeleteMessage
 		extends UseCase<GroupAdminDeleteMessage.InputValues, GroupAdminDeleteMessage.OutputValues> {
@@ -71,8 +69,13 @@ public class GroupAdminDeleteMessage
 			DeletingMessage.InputValues deletingMessageInput = new DeletingMessage.InputValues(
 					message.getSender().getId(), message.getId());
 			DeletingMessage deletingMessage = new DeletingMessage(_dataStorage);
-			deletingMessage.execute(deletingMessageInput);
-			return new OutputValues(GroupAdminDeleteMessageResult.Successed);
+			DeletingMessage.OutputValues deletingMessageOutput = deletingMessage.execute(deletingMessageInput);
+			if (deletingMessageOutput.getResult() == DeletingMessageResult.Successed) {
+				return new OutputValues(GroupAdminDeleteMessageResult.Successed);
+			} else {
+				return new OutputValues(GroupAdminDeleteMessageResult.Failed);
+			}
+
 		}
 
 		return new OutputValues(GroupAdminDeleteMessageResult.Failed);

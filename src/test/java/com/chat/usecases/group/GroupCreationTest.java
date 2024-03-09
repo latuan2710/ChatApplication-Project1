@@ -19,38 +19,32 @@ class GroupCreationTest {
 
 		User user = new User("dasdas", "", "", "", false, null);
 		storage.getUserRepository().add(user);
-
-		GroupCreation.InputValues inputPublicGroup = new GroupCreation.InputValues(user.getId(), GroupType.Public);
-		GroupCreation.InputValues inputPrivateGroup = new GroupCreation.InputValues(user.getId(), GroupType.Private);
-
-		GroupCreation groupCreation = new GroupCreation(storage);
-
-		groupCreation.execute(inputPublicGroup);
-		groupCreation.execute(inputPrivateGroup);
 	}
 
 	@Test
 	void testPrivateGroupCreation() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = storage.getUserRepository().getAll().get(0);
-		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Private);
+		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Private, "private");
 
 		GroupCreation groupCreation = new GroupCreation(storage);
 		GroupCreation.OutputValues output = groupCreation.execute(input);
 
 		Assert.assertEquals(output.getResult(), GroupCreationResult.Successed);
+		Assert.assertEquals("private", output.getGroup().getName());
 	}
 
 	@Test
 	void testPublicGroupCreation() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = storage.getUserRepository().getAll().get(0);
-		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Public);
+		GroupCreation.InputValues input = new GroupCreation.InputValues(user.getId(), GroupType.Public, "public");
 
 		GroupCreation groupCreation = new GroupCreation(storage);
 		GroupCreation.OutputValues output = groupCreation.execute(input);
 
 		Assert.assertEquals(output.getResult(), GroupCreationResult.Successed);
+		Assert.assertEquals("public", output.getGroup().getName());
 	}
 
 	@AfterEach
