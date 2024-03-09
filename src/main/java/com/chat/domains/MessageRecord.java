@@ -1,10 +1,10 @@
 package com.chat.domains;
 
-public class MessageRecorder extends BaseEntity {
+public class MessageRecord extends BaseEntity {
 	private Message _message;
 	private User _user;
 
-	public MessageRecorder(Message message, User user) {
+	public MessageRecord(Message message, User user) {
 		super();
 		this._message = message;
 		this._user = user;

@@ -2,6 +2,7 @@ package com.chat.infrastructure.data;
 
 import com.chat.domains.Message;
 import com.chat.domains.MessageHistory;
+import com.chat.domains.MessageRecord;
 import com.chat.domains.User;
 import com.chat.infrastructure.repositories.InMemoryGroupRepository;
 import com.chat.infrastructure.repositories.InMemoryRepository;
@@ -13,6 +14,7 @@ public class InMemoryDataStorage implements DataStorage {
 	private Repository<User> _users;
 	private Repository<Message> _messages;
 	private Repository<MessageHistory> _messageHistory;
+	private Repository<MessageRecord> _messageRecord;
 	private GroupRepository _groups;
 
 	private static InMemoryDataStorage _storage;
@@ -22,6 +24,7 @@ public class InMemoryDataStorage implements DataStorage {
 		_groups = new InMemoryGroupRepository();
 		_messages = new InMemoryRepository<Message>();
 		_messageHistory = new InMemoryRepository<MessageHistory>();
+		_messageRecord = new InMemoryRepository<MessageRecord>();
 	}
 
 	public static InMemoryDataStorage getInstance() {
@@ -57,6 +60,11 @@ public class InMemoryDataStorage implements DataStorage {
 		_groups.deleteAll();
 		_messages.deleteAll();
 		_messageHistory.deleteAll();
+	}
+
+	@Override
+	public Repository<MessageRecord> getMessageRecordRepository() {
+ 		return _messageRecord;
 	}
 
 }
