@@ -17,9 +17,9 @@ class GettingUserGroupsTest {
 		User user = new User("dasdas", "", "", "", false, null);
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		storage.getUserRepository().add(user);
-		
-		GroupCreation.InputValues in = new GroupCreation.InputValues(user.getId(), GroupType.Public);
-		GroupCreation.InputValues in1 = new GroupCreation.InputValues(user.getId(), GroupType.Private);
+
+		GroupCreation.InputValues in = new GroupCreation.InputValues(user.getId(), GroupType.Public, "public");
+		GroupCreation.InputValues in1 = new GroupCreation.InputValues(user.getId(), GroupType.Private, "private");
 
 		GroupCreation pb = new GroupCreation(storage);
 		pb.execute(in);
@@ -47,7 +47,7 @@ class GettingUserGroupsTest {
 	void testGetGroupsFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User userTest = new User("dasdas", "", "", "", false, null);
-		
+
 		GettingUserGroups.InputValues input = new GettingUserGroups.InputValues(userTest.getId());
 
 		GettingUserGroups getUserGroups = new GettingUserGroups(storage);
