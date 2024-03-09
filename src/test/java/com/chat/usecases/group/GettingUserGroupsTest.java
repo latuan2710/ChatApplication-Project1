@@ -33,7 +33,7 @@ class GettingUserGroupsTest {
 	}
 
 	@Test
-	void testGetGroupsSuccessfully() {
+	public void testGetGroupsSuccessfully() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = storage.getUserRepository().getFirst(x -> x.getUsername().equals("dasdas"));
 		GettingUserGroups.InputValues input = new GettingUserGroups.InputValues(user.getId());
@@ -44,7 +44,7 @@ class GettingUserGroupsTest {
 	}
 
 	@Test
-	void testGetGroupsFailed() {
+	public void testGetGroupsFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User userTest = new User("dasdas", "", "", "", false, null);
 

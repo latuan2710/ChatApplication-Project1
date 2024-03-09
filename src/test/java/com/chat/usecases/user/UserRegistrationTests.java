@@ -12,7 +12,7 @@ import com.chat.usecases.user.UserRegistration.RegisterResult;
 class UserRegistrationTests {
 
 	@Test
-	void RegistrationSuccesfully() {
+	public void RegistrationSuccesfully() {
 		UserRegistration.InputValues input = new UserRegistration.InputValues("ntn", "123");
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
@@ -23,7 +23,7 @@ class UserRegistrationTests {
 	}
 
 	@Test
-	void RegistrationFailed() {
+	public void RegistrationFailed() {
 		UserRegistration.InputValues input = new UserRegistration.InputValues("ntn", "");
 		DataStorage storage = InMemoryDataStorage.getInstance();
 

@@ -52,7 +52,7 @@ class GroupAdminDeleteMessageTest {
 	}
 
 	@Test
-	void testDeleteMessageInPrivateGroupSuccess() {
+	public void testDeleteMessageInPrivateGroupSuccess() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User sender = storage.getUserRepository().getAll().get(0);
@@ -73,7 +73,7 @@ class GroupAdminDeleteMessageTest {
 	}
 
 	@Test
-	void testDeleteMessageInPrivateGroupFailed() {
+	public void testDeleteMessageInPrivateGroupFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User member = storage.getUserRepository().getAll().get(1);

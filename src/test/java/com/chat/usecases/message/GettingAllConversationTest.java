@@ -18,7 +18,7 @@ import com.chat.usecases.message.GettingAllConversation.GettingAllConversationRe
 class GettingAllConversationTest {
 
 	@BeforeEach
-	void setUp() {
+	public void setUp() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user1 = new User("Tuan", "La", "Tuan", "", false, null);
@@ -52,7 +52,7 @@ class GettingAllConversationTest {
 	}
 
 	@Test
-	void testGetConversationSuccess() {
+	public void testGetConversationSuccess() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = storage.getUserRepository().getAll().get(0);
@@ -66,7 +66,7 @@ class GettingAllConversationTest {
 	}
 	
 	@Test
-	void testGetConversationFailed() {
+	public void testGetConversationFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = new User("Nghia", "Nguyen", "Nghia", "", false, null);
