@@ -1,9 +1,6 @@
 package com.chat.usecases.message;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +13,10 @@ import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
 import com.chat.usecases.message.RecordingMessage.RecordingMessageResult;
 
-class GettingMessageRecordTest {
+class MessageRecordTest {
 
 	@BeforeEach
-	public void setUp() throws FileNotFoundException, IOException {
+	public void setUp() {
 		User sender = new User("Tuan", "", "", "", false, null);
 		User receiver = new User("Nhan", "", "", "", false, null);
 
@@ -42,26 +39,26 @@ class GettingMessageRecordTest {
 		Repository<User> userRepository = storage.getUserRepository();
 		User sender = userRepository.getAll().get(0);
 		Message message = storage.getMessageRepository().getAll().get(0);
-		
+
 		RecordingMessage.InputValues input = new RecordingMessage.InputValues(sender.getId(), message.getId());
 		RecordingMessage recordingMessage = new RecordingMessage(storage);
 		RecordingMessage.OutputValues output = recordingMessage.execute(input);
-		
+
 		assertEquals(RecordingMessageResult.Successed, output.getResult());
 
 	}
-	
+
 	@Test
 	public void testFailed() {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 		User user = new User("Tuan", "", "", "", false, null);
-		
+
 		Message message = storage.getMessageRepository().getAll().get(0);
-		
+
 		RecordingMessage.InputValues input = new RecordingMessage.InputValues(user.getId(), message.getId());
 		RecordingMessage recordingMessage = new RecordingMessage(storage);
 		RecordingMessage.OutputValues output = recordingMessage.execute(input);
-		
+
 		assertEquals(RecordingMessageResult.Failed, output.getResult());
 
 	}

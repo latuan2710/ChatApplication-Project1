@@ -31,9 +31,9 @@ public class GettingAllConversation
 
 	public static class OutputValues {
 		private GettingAllConversationResult _result;
-		private HashMap<String, Conversation> _conversations;
+		private List<Conversation> _conversations;
 
-		public OutputValues(GettingAllConversationResult result, HashMap<String, Conversation> conversations) {
+		public OutputValues(GettingAllConversationResult result, List<Conversation> conversations) {
 			this._result = result;
 			this._conversations = conversations;
 		}
@@ -42,7 +42,7 @@ public class GettingAllConversation
 			return _result;
 		}
 
-		public HashMap<String, Conversation> getConversations() {
+		public List<Conversation> getConversations() {
 			return _conversations;
 		}
 
@@ -83,17 +83,17 @@ public class GettingAllConversation
 				receiverName = ((Group) receiver).getName();
 			}
 
-			String conversionName = receiverId + receiverName;
-			if (conversations.containsKey(conversionName)) {
-				Conversation conversation = conversations.get(conversionName);
+			String conversionId = receiverId + receiverName;
+			if (conversations.containsKey(conversionId)) {
+				Conversation conversation = conversations.get(conversionId);
 				conversation.addMessage(message);
-				conversations.put(conversionName, conversation);
+				conversations.put(conversionId, conversation);
 			} else {
-				conversations.put(conversionName,
-						new Conversation(conversionName, new ArrayList<>(List.of(message)), List.of(sender, receiver)));
+				conversations.put(conversionId,
+						new Conversation(conversionId, new ArrayList<>(List.of(message)), List.of(sender, receiver)));
 			}
 		}
 
-		return new OutputValues(GettingAllConversationResult.Successed, conversations);
+		return new OutputValues(GettingAllConversationResult.Successed, new ArrayList<>(conversations.values()));
 	}
 }

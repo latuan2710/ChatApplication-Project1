@@ -62,7 +62,7 @@ class GettingAllConversationTest {
 		GettingAllConversation.OutputValues output = gettingAllConversation.execute(input);
 		
 		assertEquals(GettingAllConversationResult.Successed, output.getResult());
-		assertEquals(2, output.getConversations().keySet().size());
+		assertEquals(2, output.getConversations().size());
 	}
 	
 	@Test

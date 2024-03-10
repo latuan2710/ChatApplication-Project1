@@ -2,24 +2,23 @@ package com.chat.domains;
 
 import java.util.List;
 
-public class Conversation extends ChatEntity {
-	private String _name;
+public class Conversation {
+	private String _id;
 	private List<Message> _messages;
 	private List<ChatEntity> _participants;
 
-	public Conversation(String name, List<Message> messages, List<ChatEntity> participants) {
-		super();
-		this._name = name;
+	public Conversation(String id, List<Message> messages, List<ChatEntity> participants) {
+		this._id = id;
 		this._messages = messages;
 		this._participants = participants;
 	}
 
-	public String getName() {
-		return _name;
+	public String getId() {
+		return _id;
 	}
 
-	public void setName(String name) {
-		this._name = name;
+	public void setId(String id) {
+		this._id = id;
 	}
 
 	public List<Message> getMessages() {
@@ -34,6 +33,10 @@ public class Conversation extends ChatEntity {
 		if (!_messages.contains(message)) {
 			this._messages.add(message);
 		}
+	}
+
+	public boolean haveMessage(Message message) {
+		return _messages.contains(message);
 	}
 
 	public List<ChatEntity> getParticipants() {

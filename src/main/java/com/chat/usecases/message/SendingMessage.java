@@ -47,9 +47,9 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 
 	public static class OutputValues {
 		private SendingMessageResult _result;
-		private String _message;
+		private Message _message;
 
-		public OutputValues(SendingMessageResult result, String message) {
+		public OutputValues(SendingMessageResult result, Message message) {
 			_message = message;
 			_result = result;
 		}
@@ -58,7 +58,7 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 			return _result;
 		}
 
-		public String getMessage() {
+		public Message getMessage() {
 			return _message;
 		}
 	}
@@ -70,7 +70,7 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 	@Override
 	public OutputValues execute(InputValues input) {
 		if (input._text.isBlank() || input._text.isEmpty()) {
-			return new OutputValues(SendingMessageResult.Failed, "");
+			return new OutputValues(SendingMessageResult.Failed, null);
 		}
 
 		Repository<User> userRepository = _dataStorage.getUserRepository();
@@ -83,7 +83,7 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 		if (receiver == null) {
 			receiver = groupRepository.findById(input._receiverId);
 			if (receiver == null) {
-				return new OutputValues(SendingMessageResult.Failed, "");
+				return new OutputValues(SendingMessageResult.Failed, null);
 			}
 		}
 
@@ -104,6 +104,6 @@ public class SendingMessage extends UseCase<SendingMessage.InputValues, SendingM
 
 		messageRepository.add(message);
 
-		return new OutputValues(SendingMessageResult.Successed, "");
+		return new OutputValues(SendingMessageResult.Successed, message);
 	}
 }

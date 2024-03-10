@@ -10,10 +10,10 @@ import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
 
-public class GettingMessageRecord extends UseCase<GettingMessageRecord.InputValues, GettingMessageRecord.OutputValues> {
+public class GettingMessageRecorded extends UseCase<GettingMessageRecorded.InputValues, GettingMessageRecorded.OutputValues> {
 	private DataStorage _dataStorage;
 
-	public GettingMessageRecord(DataStorage dataStorage) {
+	public GettingMessageRecorded(DataStorage dataStorage) {
 		this._dataStorage = dataStorage;
 	}
 
