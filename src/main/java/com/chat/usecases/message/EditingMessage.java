@@ -53,17 +53,11 @@ public class EditingMessage extends UseCase<EditingMessage.InputValues, EditingM
 	public OutputValues execute(InputValues input) {
 		Repository<Message> messageRepository = _dataStorage.getMessageRepository();
 		Repository<MessageHistory> messageHistoryRepository = _dataStorage.getMessageHistoryRepository();
-		
-		GettingMessageHistory gettingMessageHistory = new GettingMessageHistory(_dataStorage);
-		GettingMessageHistory.InputValues gettingMessageHistoryInput = new GettingMessageHistory.InputValues(
-				input._messageId);
-		GettingMessageHistory.OutputValues gettingMessageHistoryOutput = gettingMessageHistory
-				.execute(gettingMessageHistoryInput);
 
 		Message message = messageRepository.findById(input._messageId);
 
 		if (message != null && message.getSender().getId().equals(input._senderId)) {
-			MessageHistory history = gettingMessageHistoryOutput.getMessageHistory();
+			MessageHistory history = getMessageHistory(input);
 
 			if (history == null) {
 				history = new MessageHistory(message.getId());
@@ -78,5 +72,16 @@ public class EditingMessage extends UseCase<EditingMessage.InputValues, EditingM
 
 		return new OutputValues(EditingMessageResult.Failed, message);
 
+	}
+
+	private MessageHistory getMessageHistory(InputValues input) {
+		GettingMessageHistory gettingMessageHistory = new GettingMessageHistory(_dataStorage);
+		GettingMessageHistory.InputValues gettingMessageHistoryInput = new GettingMessageHistory.InputValues(
+				input._messageId);
+		GettingMessageHistory.OutputValues gettingMessageHistoryOutput = gettingMessageHistory
+				.execute(gettingMessageHistoryInput);
+
+		MessageHistory history = gettingMessageHistoryOutput.getMessageHistory();
+		return history;
 	}
 }

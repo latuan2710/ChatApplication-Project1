@@ -1,7 +1,6 @@
 package com.chat.infrastructure.services;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,11 +13,9 @@ public class FileService implements InterfaceFileService {
 	public void saveFile(byte[] content, String path) {
 		try (FileOutputStream outputStream = new FileOutputStream(path)) {
 			outputStream.write(content);
-		} catch (FileNotFoundException exception) {
-			exception.printStackTrace();
 		} catch (IOException exception) {
 			exception.printStackTrace();
-		}
+		} 
 
 	}
 
@@ -27,8 +24,8 @@ public class FileService implements InterfaceFileService {
 		File file = new File(path);
 		try {
 			return Files.readAllBytes(file.toPath());
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException exception) {
+			exception.printStackTrace();
 			return null;
 		}
 

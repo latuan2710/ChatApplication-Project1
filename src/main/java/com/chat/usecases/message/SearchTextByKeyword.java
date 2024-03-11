@@ -71,12 +71,8 @@ public class SearchTextByKeyword extends UseCase<SearchTextByKeyword.InputValues
 
 		messages = messages.stream().filter(m -> m.getSender().equals(sender) && m.getReceiver().equals(receiver))
 				.collect(Collectors.toList());
-//		messages.sort((m1, m2) -> m1.getTimestamp().compareTo(m2.getTimestamp()));
 
 		messages = searchTextByKeyword(input._keyword, messages);
-		if(messages.isEmpty()) {
-			return new OutputValues(SearchTextByKeywordResult.Failed, null);
-		}
 
 		return new OutputValues(SearchTextByKeywordResult.Successed, messages);
 	}

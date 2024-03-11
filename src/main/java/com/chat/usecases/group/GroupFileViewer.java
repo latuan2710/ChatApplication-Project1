@@ -56,19 +56,15 @@ public class GroupFileViewer extends UseCase<GroupFileViewer.InputValues, GroupF
 	public OutputValues execute(InputValues input) {
 		GroupRepository groupRepository = _dataStorage.getGroupRepository();
 
-		GettingMessages.InputValues gettingMessageInput = new GettingMessages.InputValues(input._userId);
-		GettingMessages gettingMessage = new GettingMessages(_dataStorage);
-		GettingMessages.OutputValues gettingMessageOutput = gettingMessage.execute(gettingMessageInput);
-
-		List<Message> messages = gettingMessageOutput.getMessages();
-
 		Group group = groupRepository.findById(input._groupId);
+		
+		if (group == null) {
+			return new OutputValues(GettingAllFileResult.Failed, null);
+		}
+
+		List<Message> messages = getMessagesByUserId(input);
 		Predicate<Message> groupMessagePredicate = m -> m.getReceiver().getId().equals(group.getId());
 		messages = messages.stream().filter(groupMessagePredicate).toList();
-
-		if (messages.isEmpty()) {
-			return new OutputValues(GettingAllFileResult.Successed, null);
-		}
 
 		List<File> result = new ArrayList<>();
 		for (Message message : messages) {
@@ -77,5 +73,14 @@ public class GroupFileViewer extends UseCase<GroupFileViewer.InputValues, GroupF
 
 		return new OutputValues(GettingAllFileResult.Successed, result.isEmpty() ? null : result);
 
+	}
+
+	private List<Message> getMessagesByUserId(InputValues input) {
+		GettingMessages.InputValues gettingMessageInput = new GettingMessages.InputValues(input._userId);
+		GettingMessages gettingMessage = new GettingMessages(_dataStorage);
+		GettingMessages.OutputValues gettingMessageOutput = gettingMessage.execute(gettingMessageInput);
+
+		List<Message> messages = gettingMessageOutput.getMessages();
+		return messages;
 	}
 }

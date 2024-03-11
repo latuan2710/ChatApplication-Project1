@@ -31,7 +31,6 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 		}
 
 		public InputValues(String userId, String inviteCode) {
-			super();
 			this._userId = userId;
 			this._inviteCode = inviteCode;
 		}
@@ -40,19 +39,13 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 
 	public static class OutputValues {
 		private GroupJoiningResult _result;
-		private String _message;
 
-		public OutputValues(GroupJoiningResult result, String message) {
+		public OutputValues(GroupJoiningResult result) {
 			this._result = result;
-			this._message = message;
 		}
 
 		public GroupJoiningResult getResult() {
 			return _result;
-		}
-
-		public String getMessage() {
-			return _message;
 		}
 
 	}
@@ -71,6 +64,10 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 		User user = userRepository.findById(input._userId);
 		User invitor = userRepository.findById(input._invitorId);
 
+		if (inputGroup == null || user == null || invitor == null) {
+			return new OutputValues(GroupJoiningResult.Failed);
+		}
+
 		boolean isJoinedByCode = false;
 		boolean isJoinedByMember = false;
 		boolean isJoinByAdmin = false;
@@ -83,9 +80,8 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 			isJoinByAdmin = joinByAdmin((PrivateGroup) inputGroup, invitor, user);
 		}
 
-		return (isJoinedByCode || isJoinedByMember || isJoinByAdmin)
-				? new OutputValues(GroupJoiningResult.Successed, "")
-				: new OutputValues(GroupJoiningResult.Failed, "");
+		return (isJoinedByCode || isJoinedByMember || isJoinByAdmin) ? new OutputValues(GroupJoiningResult.Successed)
+				: new OutputValues(GroupJoiningResult.Failed);
 	}
 
 	private boolean joinByCode(String inviteCode, User user) {

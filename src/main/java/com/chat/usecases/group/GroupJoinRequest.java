@@ -1,5 +1,6 @@
 package com.chat.usecases.group;
 
+import com.chat.domains.Group;
 import com.chat.domains.GroupRequest;
 import com.chat.domains.GroupRequest.GroupRequestStatus;
 import com.chat.domains.PrivateGroup;
@@ -18,12 +19,11 @@ public class GroupJoinRequest extends UseCase<GroupJoinRequest.InputValues, Grou
 
 	public static class InputValues {
 		private String _groupId;
-		private String _userSendRequestId;
+		private String _userId;
 
-		public InputValues(String groupId, String userSendRequestId) {
-			super();
+		public InputValues(String groupId, String userId) {
 			this._groupId = groupId;
-			this._userSendRequestId = userSendRequestId;
+			this._userId = userId;
 		}
 	}
 
@@ -39,25 +39,27 @@ public class GroupJoinRequest extends UseCase<GroupJoinRequest.InputValues, Grou
 		}
 	}
 
-	public static enum GroupJoinRequestResult {
+	public enum GroupJoinRequestResult {
 		Successed, Failed
 	}
 
 	@Override
 	public OutputValues execute(InputValues input) {
 		Repository<User> userRepository = _dataStorage.getUserRepository();
+		Repository<GroupRequest> groupRequestRepository = _dataStorage.getGroupRequestRepository();
 		GroupRepository groupRepository = _dataStorage.getGroupRepository();
 
-		User userSendRequestId = userRepository.findById(input._userSendRequestId);
-		PrivateGroup inputGroup = (PrivateGroup) groupRepository.findById(input._groupId);
+		User user = userRepository.findById(input._userId);
+		Group group = groupRepository.findById(input._groupId);
 
-		GroupRequest groupRequest = new GroupRequest(userSendRequestId, inputGroup, GroupRequestStatus.Waiting);
-		
-		if (userSendRequestId == null || inputGroup == null) {
+		if (user == null || group == null || !(group instanceof PrivateGroup)) {
 			return new OutputValues(GroupJoinRequestResult.Failed);
-		} else {
-			return new OutputValues(GroupJoinRequestResult.Successed);
 		}
+
+		GroupRequest groupRequest = new GroupRequest(user, (PrivateGroup) group, GroupRequestStatus.Waiting);
+		groupRequestRepository.add(groupRequest);
+
+		return new OutputValues(GroupJoinRequestResult.Successed);
 	}
 
 }

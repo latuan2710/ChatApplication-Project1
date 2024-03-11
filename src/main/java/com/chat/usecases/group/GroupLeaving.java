@@ -18,7 +18,6 @@ public class GroupLeaving extends UseCase<GroupLeaving.InputValues, GroupLeaving
 		private String _groupId;
 
 		public InputValues(String userId, String groupId) {
-			super();
 			this._userId = userId;
 			this._groupId = groupId;
 		}

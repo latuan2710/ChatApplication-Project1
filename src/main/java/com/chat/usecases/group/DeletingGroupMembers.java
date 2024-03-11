@@ -1,5 +1,6 @@
 package com.chat.usecases.group;
 
+import com.chat.domains.Group;
 import com.chat.domains.PrivateGroup;
 import com.chat.domains.User;
 import com.chat.usecases.UseCase;
@@ -49,11 +50,15 @@ public class DeletingGroupMembers extends UseCase<DeletingGroupMembers.InputValu
 		GroupRepository groupRepository = _dataStorage.getGroupRepository();
 		Repository<User> userRepository = _dataStorage.getUserRepository();
 
-		PrivateGroup group = (PrivateGroup) groupRepository.findById(input._groupId);
+		Group group = groupRepository.findById(input._groupId);
 		User admin = userRepository.findById(input._adminId);
 		User member = userRepository.findById(input._memberId);
 
-		if (group.hasAdmin(admin)) {
+		if (admin == null || group == null || member == null || !(group instanceof PrivateGroup)) {
+			return new OutputValues(DeletingGroupMembersResult.Failed);
+		}
+
+		if (((PrivateGroup) group).hasAdmin(admin)) {
 			group.removeMember(member);
 
 			return new OutputValues(DeletingGroupMembersResult.Successed);

@@ -1,10 +1,8 @@
 package com.chat.usecases.message;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.chat.domains.MessageHistory;
 import com.chat.domains.MessageRecord;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;

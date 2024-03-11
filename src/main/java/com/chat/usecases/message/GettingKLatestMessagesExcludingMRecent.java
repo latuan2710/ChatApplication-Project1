@@ -9,10 +9,9 @@ import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
 import com.chat.usecases.message.GettingMessages.GettingMessagesResult;
-import com.chat.usecases.message.SearchTextByKeyword.OutputValues;
-import com.chat.usecases.message.SearchTextByKeyword.SearchTextByKeywordResult;
 
-public class GettingKLatestMessagesExcludingMRecent extends UseCase<GettingKLatestMessagesExcludingMRecent.InputValues, GettingKLatestMessagesExcludingMRecent.OutputValues> {
+public class GettingKLatestMessagesExcludingMRecent extends
+		UseCase<GettingKLatestMessagesExcludingMRecent.InputValues, GettingKLatestMessagesExcludingMRecent.OutputValues> {
 	DataStorage _dataStorage;
 
 	public GettingKLatestMessagesExcludingMRecent(DataStorage dataStorage) {
@@ -63,27 +62,24 @@ public class GettingKLatestMessagesExcludingMRecent extends UseCase<GettingKLate
 		User sender = userRepository.findById(input._senderId);
 		User receiver = userRepository.findById(input._receiverId);
 
-		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(
-				input._senderId);
+		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(input._senderId);
 		GettingMessages gettingAllMessages = new GettingMessages(_dataStorage);
-		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages
-				.execute(gettingAllMessagesInput);
-		
+		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages.execute(gettingAllMessagesInput);
+
 		if (gettingAllMessagesOutput.getResult() == GettingMessagesResult.Failed) {
 			return new OutputValues(GettingKLatestMessagesExcludingMRecentResult.Failed, null);
 		}
-		
+
 		List<Message> messages = gettingAllMessagesOutput.getMessages();
 		messages = messages.stream().filter(m -> m.getSender().equals(sender) && m.getReceiver().equals(receiver))
 				.toList();
-//		messages.sort((m1, m2) -> m1.getTimestamp().compareTo(m2.getTimestamp()));
 
 		messages = getTopLatestMessages(input._k, input._m, messages);
-		
-		if(messages.isEmpty()) {
+
+		if (messages.isEmpty()) {
 			return new OutputValues(GettingKLatestMessagesExcludingMRecentResult.Failed, null);
 		}
-		
+
 		return new OutputValues(GettingKLatestMessagesExcludingMRecentResult.Successed, messages);
 	}
 

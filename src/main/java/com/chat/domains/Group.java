@@ -48,7 +48,7 @@ public abstract class Group extends ChatEntity {
 		this._name = name;
 	}
 
-	public static enum GroupType {
+	public enum GroupType {
 		Private, Public
 	}
 }

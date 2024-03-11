@@ -70,6 +70,7 @@ public class GroupAdminDeleteMessage
 					message.getSender().getId(), message.getId());
 			DeletingMessage deletingMessage = new DeletingMessage(_dataStorage);
 			DeletingMessage.OutputValues deletingMessageOutput = deletingMessage.execute(deletingMessageInput);
+			
 			if (deletingMessageOutput.getResult() == DeletingMessageResult.Successed) {
 				return new OutputValues(GroupAdminDeleteMessageResult.Successed);
 			} else {

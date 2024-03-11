@@ -1,12 +1,11 @@
 package com.chat.usecases.group;
 
 import com.chat.domains.GroupRequest;
+import com.chat.domains.GroupRequest.GroupRequestStatus;
 import com.chat.domains.PrivateGroup;
 import com.chat.domains.User;
-import com.chat.domains.GroupRequest.GroupRequestStatus;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
-import com.chat.usecases.adapters.GroupRepository;
 import com.chat.usecases.adapters.Repository;
 
 public class GroupRequestHandler extends UseCase<GroupRequestHandler.InputValues, GroupRequestHandler.OutputValues> {
@@ -18,13 +17,13 @@ public class GroupRequestHandler extends UseCase<GroupRequestHandler.InputValues
 
 	public static class InputValues {
 		private String _adminId;
+		private String _requestId;
 		private boolean _isAccept;
-		private String _groupId;
-		
-		public InputValues(String adminId, boolean isAccept, String groupId) {
+
+		public InputValues(String adminId, String requestId, boolean isAccept) {
 			this._adminId = adminId;
 			this._isAccept = isAccept;
-			this._groupId = groupId;
+			this._requestId = requestId;
 		}
 
 	}
@@ -41,47 +40,36 @@ public class GroupRequestHandler extends UseCase<GroupRequestHandler.InputValues
 		}
 	}
 
-	public static enum RequestResult {
-		Approve, Reject
+	public enum RequestResult {
+		Successed, Failed
 	}
 
 	@Override
 	public OutputValues execute(InputValues input) {
 		Repository<User> userRepository = _dataStorage.getUserRepository();
 		Repository<GroupRequest> groupRequestRepository = _dataStorage.getGroupRequestRepository();
-		GroupRepository groupRepository = _dataStorage.getGroupRepository();
-		
-		//get group and adminId
-		PrivateGroup inputGroup = (PrivateGroup) groupRepository.findById(input._groupId);
+
 		User admin = userRepository.findById(input._adminId);
-		
-		//get request
-		GroupRequest userRequest = (GroupRequest) groupRequestRepository.getAll();
-		
-		User userReqUserId = userRequest.get_user();
-		
-		Boolean isAccept = input._isAccept;
-		
-		if (inputGroup.getId()==userRequest.get_group().getId() && isAccept == true) {
-			addNewMember(inputGroup, admin, userReqUserId);
-			userRequest.set_status(GroupRequestStatus.Accepted);
-			return new OutputValues(RequestResult.Approve);
-		}
-		else {
-			userRequest.set_status(GroupRequestStatus.Rejected);
-			return new OutputValues(RequestResult.Reject);
-		}
-		
-	}
+		GroupRequest request = groupRequestRepository.findById(input._requestId);
 
-	public boolean addNewMember(PrivateGroup inputGroup, User admin, User userRequest) {
-		
-		if (inputGroup.hasAdmin(admin)) {
-			inputGroup.addMember(userRequest);
-			return true;
+		if (admin == null || request == null) {
+			return new OutputValues(RequestResult.Failed);
 		}
-		return false;
+
+		PrivateGroup group = request.getGroup();
+
+		if (group.hasAdmin(admin)) {
+			if (input._isAccept) {
+				request.setStatus(GroupRequestStatus.Accepted);
+				group.addMember(request.getUser());
+			} else {
+				request.setStatus(GroupRequestStatus.Rejected);
+			}
+			
+			return new OutputValues(RequestResult.Successed);
+		}
+
+		return new OutputValues(RequestResult.Failed);
 
 	}
-
 }

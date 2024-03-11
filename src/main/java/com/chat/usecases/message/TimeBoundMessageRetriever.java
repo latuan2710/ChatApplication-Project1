@@ -9,8 +9,6 @@ import com.chat.domains.Message;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.message.GettingMessages.GettingMessagesResult;
-import com.chat.usecases.message.SearchTextByKeyword.OutputValues;
-import com.chat.usecases.message.SearchTextByKeyword.SearchTextByKeywordResult;
 
 public class TimeBoundMessageRetriever
 		extends UseCase<TimeBoundMessageRetriever.InputValues, TimeBoundMessageRetriever.OutputValues> {

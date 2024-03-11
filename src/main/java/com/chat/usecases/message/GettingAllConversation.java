@@ -26,7 +26,6 @@ public class GettingAllConversation
 		public InputValues(String userId) {
 			this._userId = userId;
 		}
-
 	}
 
 	public static class OutputValues {
@@ -56,11 +55,7 @@ public class GettingAllConversation
 	public OutputValues execute(InputValues input) {
 		HashMap<String, Conversation> conversations = new HashMap<>();
 
-		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(input._userId);
-		GettingMessages gettingAllMessages = new GettingMessages(_dataStorage);
-		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages.execute(gettingAllMessagesInput);
-
-		List<Message> messages = gettingAllMessagesOutput.getMessages();
+		List<Message> messages = getMessagesByUserId(input._userId);
 
 		if (messages == null) {
 			return new OutputValues(GettingAllConversationResult.Failed, null);
@@ -95,5 +90,14 @@ public class GettingAllConversation
 		}
 
 		return new OutputValues(GettingAllConversationResult.Successed, new ArrayList<>(conversations.values()));
+	}
+
+	private List<Message> getMessagesByUserId(String userId) {
+		GettingMessages.InputValues gettingAllMessagesInput = new GettingMessages.InputValues(userId);
+		GettingMessages gettingAllMessages = new GettingMessages(_dataStorage);
+		GettingMessages.OutputValues gettingAllMessagesOutput = gettingAllMessages.execute(gettingAllMessagesInput);
+
+		List<Message> messages = gettingAllMessagesOutput.getMessages();
+		return messages;
 	}
 }

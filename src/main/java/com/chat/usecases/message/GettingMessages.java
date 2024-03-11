@@ -50,23 +50,24 @@ public class GettingMessages extends UseCase<GettingMessages.InputValues, Gettin
 
 	@Override
 	public OutputValues execute(InputValues input) {
-		GettingUserGroups.InputValues gettingUserGroupsInput = new GettingUserGroups.InputValues(input._senderId);
-		GettingUserGroups gettingUserGroups = new GettingUserGroups(_dataStorage);
-		GettingUserGroups.OutputValues gettingUserGroupsOutput = gettingUserGroups.execute(gettingUserGroupsInput);
-
-		List<Group> groups = gettingUserGroupsOutput.getGroups();
-
 		Repository<Message> messageMepository = _dataStorage.getMessageRepository();
+
+		List<Group> groups = getUserGroups(input);
 
 		Predicate<Message> predicate = m -> (m.getSender().getId().equals(input._senderId))
 				|| m.getReceiver().getId().equals(input._senderId) || groups.contains(m.getReceiver());
 		List<Message> messages = messageMepository.getAll();
 		List<Message> result = messages.stream().filter(predicate).toList();
 
-		if(result==null||result.isEmpty()) {
-			return new OutputValues(GettingMessagesResult.Failed, null);
-		}
-		
 		return new OutputValues(GettingMessagesResult.Successed, result);
+	}
+
+	private List<Group> getUserGroups(InputValues input) {
+		GettingUserGroups.InputValues gettingUserGroupsInput = new GettingUserGroups.InputValues(input._senderId);
+		GettingUserGroups gettingUserGroups = new GettingUserGroups(_dataStorage);
+		GettingUserGroups.OutputValues gettingUserGroupsOutput = gettingUserGroups.execute(gettingUserGroupsInput);
+
+		List<Group> groups = gettingUserGroupsOutput.getGroups();
+		return groups;
 	}
 }

@@ -28,21 +28,15 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 
 	public static class OutputValues {
 		private GettingGroupResult _result;
-		private String _message;
 		private List<Group> _group;
 
-		public OutputValues(GettingGroupResult result, String message, List<Group> group) {
+		public OutputValues(GettingGroupResult result, List<Group> group) {
 			this._result = result;
-			this._message = message;
 			this._group = group;
 		}
 
 		public GettingGroupResult getResult() {
 			return _result;
-		}
-
-		public String getMessage() {
-			return _message;
 		}
 
 		public List<Group> getGroups() {
@@ -58,12 +52,12 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 	public OutputValues execute(InputValues input) {
 		List<Group> result = new ArrayList<>();
 		List<Group> groups = _dataStorage.getGroupRepository().getAll();
+		User userInput = _dataStorage.getUserRepository().findById(input._userId);
 
-		if (groups.isEmpty()) {
-			return new OutputValues(GettingGroupResult.Successed, "", result);
+		if (userInput == null) {
+			return new OutputValues(GettingGroupResult.Failed, null);
 		}
 
-		User userInput = _dataStorage.getUserRepository().findById(input._userId);
 		for (Group group : groups) {
 			if (group instanceof PublicGroup && group.getUsers().contains(userInput)) {
 				result.add(group);
@@ -75,10 +69,6 @@ public class GettingUserGroups extends UseCase<GettingUserGroups.InputValues, Ge
 			}
 		}
 
-		if (result.isEmpty()) {
-			return new OutputValues(GettingGroupResult.Failed, "", result);
-		} else {
-			return new OutputValues(GettingGroupResult.Successed, "", result);
-		}
+		return new OutputValues(GettingGroupResult.Successed, result);
 	}
 }

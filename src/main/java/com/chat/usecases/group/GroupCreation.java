@@ -35,21 +35,15 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 
 	public static class OutputValues {
 		private GroupCreationResult _result;
-		private String _message;
 		private Group _group;
 
-		public OutputValues(GroupCreationResult result, String messageId, Group group) {
+		public OutputValues(GroupCreationResult result, Group group) {
 			this._result = result;
-			this._message = messageId;
 			this._group = group;
 		}
 
 		public GroupCreationResult getResult() {
 			return _result;
-		}
-
-		public String getMessageId() {
-			return _message;
 		}
 
 		public Group getGroup() {
@@ -70,7 +64,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 		Group group = null;
 
 		if (user == null) {
-			return new OutputValues(GroupCreationResult.Failed, "", group);
+			return new OutputValues(GroupCreationResult.Failed, group);
 		}
 
 		users.add(user);
@@ -81,7 +75,7 @@ public class GroupCreation extends UseCase<GroupCreation.InputValues, GroupCreat
 			group = createPrivateGroup(repository, new ArrayList<>(), user, input._groupName);
 		}
 
-		return new OutputValues(GroupCreationResult.Successed, "", group);
+		return new OutputValues(GroupCreationResult.Successed, group);
 	}
 
 	private Group createPrivateGroup(GroupRepository repository, List<User> users, User user, String groupName) {

@@ -44,6 +44,7 @@ class GroupJoiningTest {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 
 		User user = new User("dasdas", "", "", "", false, null);
+		storage.getUserRepository().add(user);
 		User invitor = storage.getUserRepository().getAll().get(0);
 		PublicGroup group = storage.getGroupRepository().getAllPublicGroup().get(0);
 

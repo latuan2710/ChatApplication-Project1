@@ -1,5 +1,6 @@
 package com.chat.infrastructure.data;
 
+import com.chat.domains.GroupRequest;
 import com.chat.domains.Message;
 import com.chat.domains.MessageHistory;
 import com.chat.domains.MessageRecord;
@@ -15,6 +16,7 @@ public class InMemoryDataStorage implements DataStorage {
 	private Repository<Message> _messages;
 	private Repository<MessageHistory> _messageHistory;
 	private Repository<MessageRecord> _messageRecord;
+	private Repository<GroupRequest> _groupReqquest;
 	private GroupRepository _groups;
 
 	private static InMemoryDataStorage _storage;
@@ -25,6 +27,7 @@ public class InMemoryDataStorage implements DataStorage {
 		_messages = new InMemoryRepository<Message>();
 		_messageHistory = new InMemoryRepository<MessageHistory>();
 		_messageRecord = new InMemoryRepository<MessageRecord>();
+		_groupReqquest = new InMemoryRepository<GroupRequest>();
 	}
 
 	public static InMemoryDataStorage getInstance() {
@@ -50,6 +53,16 @@ public class InMemoryDataStorage implements DataStorage {
 	}
 
 	@Override
+	public Repository<MessageRecord> getMessageRecordRepository() {
+		return _messageRecord;
+	}
+
+	@Override
+	public Repository<GroupRequest> getGroupRequestRepository() {
+		return _groupReqquest;
+	}
+
+	@Override
 	public GroupRepository getGroupRepository() {
 		return _groups;
 	}
@@ -60,11 +73,8 @@ public class InMemoryDataStorage implements DataStorage {
 		_groups.deleteAll();
 		_messages.deleteAll();
 		_messageHistory.deleteAll();
-	}
-
-	@Override
-	public Repository<MessageRecord> getMessageRecordRepository() {
- 		return _messageRecord;
+		_messageRecord.deleteAll();
+		_groupReqquest.deleteAll();
 	}
 
 }
