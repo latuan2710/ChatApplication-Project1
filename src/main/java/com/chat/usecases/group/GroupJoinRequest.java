@@ -1,8 +1,8 @@
 package com.chat.usecases.group;
 
-import com.chat.domains.Group;
+import com.chat.domains.GroupRequest;
+import com.chat.domains.GroupRequest.GroupRequestStatus;
 import com.chat.domains.PrivateGroup;
-import com.chat.domains.PublicGroup;
 import com.chat.domains.User;
 import com.chat.usecases.UseCase;
 import com.chat.usecases.adapters.DataStorage;
@@ -30,7 +30,7 @@ public class GroupJoinRequest extends UseCase<GroupJoinRequest.InputValues, Grou
 	public static class OutputValues {
 		private GroupJoinRequestResult _result;
 
-		public OutputValues(GroupJoinRequestResult result, String message) {
+		public OutputValues(GroupJoinRequestResult result) {
 			this._result = result;
 		}
 
@@ -49,12 +49,14 @@ public class GroupJoinRequest extends UseCase<GroupJoinRequest.InputValues, Grou
 		GroupRepository groupRepository = _dataStorage.getGroupRepository();
 
 		User userSendRequestId = userRepository.findById(input._userSendRequestId);
-		Group inputGroup = groupRepository.findById(input._groupId);
+		PrivateGroup inputGroup = (PrivateGroup) groupRepository.findById(input._groupId);
 
+		GroupRequest groupRequest = new GroupRequest(userSendRequestId, inputGroup, GroupRequestStatus.Waiting);
+		
 		if (userSendRequestId == null || inputGroup == null) {
-			return new OutputValues(GroupJoinRequestResult.Failed, "");
+			return new OutputValues(GroupJoinRequestResult.Failed);
 		} else {
-			return new OutputValues(GroupJoinRequestResult.Successed, "");
+			return new OutputValues(GroupJoinRequestResult.Successed);
 		}
 	}
 
