@@ -45,7 +45,7 @@ public class GroupAdminDeleteMessage
 		}
 	}
 
-	public static enum GroupAdminDeleteMessageResult {
+	public enum GroupAdminDeleteMessageResult {
 		Successed, Failed
 	}
 
