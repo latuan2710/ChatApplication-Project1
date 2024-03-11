@@ -1,6 +1,7 @@
 package com.chat.usecases.group;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -69,7 +70,7 @@ class GroupAdminDeleteMessageTest {
 		List<Message> messages = gettingAllMessages.execute(gettingAllMessagesInput).getMessages();
 
 		assertEquals(GroupAdminDeleteMessageResult.Successed, output.getResult());
-		assertEquals(null, messages);
+		assertTrue(messages.isEmpty());
 	}
 
 	@Test

@@ -5,13 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.chat.domains.Message;
 import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;
@@ -67,15 +65,14 @@ class TimeBoundMessageRetrieverTest {
 		DataStorage storage = InMemoryDataStorage.getInstance();
 	
 		User sender = new User("Tuan", "", "", "", false, null);
-		User receiver = new User("Nhan", "", "", "", false, null);
 		
 		Date time = new Date();
 
 		TimeBoundMessageRetriever.InputValues input = new TimeBoundMessageRetriever.InputValues(sender.getId(), 3,
 				time);
-
 		TimeBoundMessageRetriever timeBoundMessageRetriever = new TimeBoundMessageRetriever(storage);
 		TimeBoundMessageRetriever.OutputValues output = timeBoundMessageRetriever.execute(input);
+		
 		assertEquals(TimeBoundMessageRetrieverResult.Failed, output.getResult());
 
 	}

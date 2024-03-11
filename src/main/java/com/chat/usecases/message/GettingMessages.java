@@ -53,6 +53,10 @@ public class GettingMessages extends UseCase<GettingMessages.InputValues, Gettin
 		Repository<Message> messageMepository = _dataStorage.getMessageRepository();
 
 		List<Group> groups = getUserGroups(input);
+		
+		if(groups==null) {
+			return new OutputValues(GettingMessagesResult.Failed, null);
+		}
 
 		Predicate<Message> predicate = m -> (m.getSender().getId().equals(input._senderId))
 				|| m.getReceiver().getId().equals(input._senderId) || groups.contains(m.getReceiver());

@@ -4,13 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.chat.domains.Message;
 import com.chat.domains.User;
 import com.chat.infrastructure.data.InMemoryDataStorage;
 import com.chat.usecases.adapters.DataStorage;

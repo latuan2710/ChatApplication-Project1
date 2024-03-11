@@ -64,10 +64,6 @@ public class GroupJoining extends UseCase<GroupJoining.InputValues, GroupJoining
 		User user = userRepository.findById(input._userId);
 		User invitor = userRepository.findById(input._invitorId);
 
-		if (inputGroup == null || user == null || invitor == null) {
-			return new OutputValues(GroupJoiningResult.Failed);
-		}
-
 		boolean isJoinedByCode = false;
 		boolean isJoinedByMember = false;
 		boolean isJoinByAdmin = false;
