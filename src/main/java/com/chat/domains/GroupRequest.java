@@ -24,8 +24,8 @@ public class GroupRequest extends BaseEntity {
 		return _status;
 	}
 
-	public GroupRequestStatus setStatus(GroupRequestStatus status) {
-		return status;
+	public void setStatus(GroupRequestStatus status) {
+		this._status = status;
 	}
 
 	public enum GroupRequestStatus {

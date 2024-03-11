@@ -13,7 +13,7 @@ import com.chat.usecases.adapters.DataStorage;
 import com.chat.usecases.adapters.Repository;
 import com.chat.usecases.message.RecordingMessage.RecordingMessageResult;
 
-class MessageRecordTest {
+class RecordingMessageTest {
 
 	@BeforeEach
 	public void setUp() {
